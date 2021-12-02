@@ -43,6 +43,7 @@ A website for creating business cards, enabling editing, changing images, and te
 - [x] Add basic editing functionality
 - [ ] Add create a new card capability
 - [ ] Add local storage persistence
+- [ ] Add form validation
 - [ ] Add additional customization for cards
   - [ ] Color picker
   - [ ] Preset avatars

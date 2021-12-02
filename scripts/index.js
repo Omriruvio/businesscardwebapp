@@ -1,3 +1,6 @@
+let cards = [];
+let isCardNew = false;
+
 const cardEditButtonEl = document.querySelector('.card__edit-button');
 const modalEl = document.querySelector('.card-edit-modal');
 const modalCloseButtonEl = document.querySelector('.card-edit-modal__close-button');
@@ -26,9 +29,24 @@ const contactInput = document.querySelector('.js-contact-input');
 // select form element 
 const formEl = document.querySelector('.card-edit-form')
 
+let toggleModal = () => {
+  modalEl.classList.toggle('card-edit-modal_active');
+}
+
+let newCard = () => {
+  let card = {
+    name: nameInput.value,
+    profession: professionInput.value,
+    contact: contactInput.value,
+    image: avatarUrlInput.value,
+  }
+  return card;
+}
+
 
 cardEditButtonEl.addEventListener('click', () => {
-  modalEl.classList.add('card-edit-modal_active')
+  // add selector based on card array position
+  toggleModal();
   nameInput.value = cardPersonNameEL.textContent;
   professionInput.value = cardPersonProfessionEL.textContent;
   contactInput.value = cardPersonContactEL.textContent;
@@ -36,7 +54,7 @@ cardEditButtonEl.addEventListener('click', () => {
 })
 
 modalCloseButtonEl.addEventListener('click', () => {
-  modalEl.classList.remove('card-edit-modal_active')
+  toggleModal();
 })
 
 formEl.addEventListener('submit', (event) => {
@@ -44,7 +62,7 @@ formEl.addEventListener('submit', (event) => {
   cardPersonNameEL.textContent = nameInput.value;
   cardPersonProfessionEL.textContent = professionInput.value;
   cardPersonContactEL.textContent = contactInput.value;
-  modalEl.classList.remove('card-edit-modal_active')
+  toggleModal();
   // add image changing functionality
 })
 
@@ -52,6 +70,17 @@ formEl.addEventListener('submit', (event) => {
 // modalEl.addEventListener('click', () => {
 //   modalEl.classList.remove('card-edit-modal_active')
 // })
+
+// listen to + button and execute:
+//    open modal
+//    set variable isCardNew = true
+
+//    listen to save button button and execute:
+//        if isCardNew
+//            let newCard = {add properties to card object}
+//            cards.append?(newCard)
+//            add elements with classes and object content to html
+//    
 
 
 // create a customCard object 

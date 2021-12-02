@@ -15,3 +15,20 @@
   justify-content: center;
   gap: 45px;
 }
+
+@media screen and (max-width: 510px) {
+  .card-edit-modal__window {
+    margin-left: -150px;
+    margin-top: -150px;
+    max-width: 300px;
+    gap: 10px;
+    margin-left: -45%;
+    margin-top: -45%;
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card-edit-modal__window {
+  }
+}
