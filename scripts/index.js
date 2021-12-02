@@ -91,10 +91,9 @@ let updateCard = () => {
     // else apply change to edited card
     cardPersonNameEL.textContent = nameInput.value;
     cardPersonProfessionEL.textContent = professionInput.value;
-    cardPersonContactEL.textContent = contactInput.value;
-    isCardNew = false;
-    
+    cardPersonContactEL.textContent = contactInput.value;    
   }
+  isCardNew = false;
   toggleModal();
 }
 
