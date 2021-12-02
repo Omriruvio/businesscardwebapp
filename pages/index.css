@@ -1,0 +1,24 @@
+/* Fonts & Normalize */
+@import url("../vendor/normalize.css");
+@import url("../vendor/fonts/fonts.css");
+
+/* Blocks */
+@import url("../blocks/page/page.css");
+@import url("../blocks/main-content/main-content.css");
+@import url("../blocks/card-list/card-list.css");
+@import url("../blocks/card/card.css");
+@import url("../blocks/card-edit-modal/card-edit-modal.css");
+@import url("../blocks/card-edit-form/card-edit-form.css");
+
+/* Elements */
+@import url("../blocks/card/__person-name/card__person-name.css");
+@import url("../blocks/card/__person-avatar/card__person-avatar.css");
+@import url("../blocks/card/__person-profession/card__person-profession.css");
+@import url("../blocks/card/__person-contact-info/card__person-contact-info.css");
+@import url("../blocks/card/__edit-button/card__edit-button.css");
+@import url("../blocks/card-edit-modal/__window/card-edit-modal__window.css");
+@import url("../blocks/card-edit-modal/__title/card-edit-modal__title.css");
+@import url("../blocks/card-edit-form/__input-field/card-edit-form__input-field.css");
+@import url("../blocks/card-edit-form/__input-field-container/card-edit-form__input-field-container.css");
+@import url("../blocks/card-edit-form/__submit-button/card-edit-form__submit-button.css");
+@import url("../blocks/card-edit-modal/__close-button/card-edit-modal__close-button.css");

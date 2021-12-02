@@ -1,0 +1,12 @@
+.card-edit-form__submit-button {
+  margin-top: 10px;
+  margin-top: 22px;
+  height: 3rem;
+  width: 8rem;
+  background-color: antiquewhite;
+  border: none;
+  border-radius: 22px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,0 +1,5 @@
+.card-edit-form__input-field-container {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+}
