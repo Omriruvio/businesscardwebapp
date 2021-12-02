@@ -2,5 +2,7 @@
   border: 1px dashed black;
   background-color: inherit;
   margin-top: 40px;
-  min-width: 400px;
+  width: 100%;
+  max-width: 400px;
+  min-width: 300px;
 }

@@ -44,6 +44,7 @@ formEl.addEventListener('submit', (event) => {
   cardPersonNameEL.textContent = nameInput.value;
   cardPersonProfessionEL.textContent = professionInput.value;
   cardPersonContactEL.textContent = contactInput.value;
+  modalEl.classList.remove('card-edit-modal_active')
   // add image changing functionality
 })
 
