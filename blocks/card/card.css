@@ -7,4 +7,5 @@
   place-items: center;
   background-color: antiquewhite;
   position: relative;
+  box-sizing: border-box;
 }
