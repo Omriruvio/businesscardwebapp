@@ -47,12 +47,15 @@ formEl.addEventListener('submit', (event) => {
   // add image changing functionality
 })
 
-
-
-
-
-
 // add click outside modal to close functinoality 
 // modalEl.addEventListener('click', () => {
 //   modalEl.classList.remove('card-edit-modal_active')
 // })
+
+
+// create a customCard object 
+// array of objects? this way can control card number and assign unique identifiers/classes
+
+// function that creates a new customCard based on user input
+
+// function that adds the elements based on the new customCard
