@@ -19,7 +19,8 @@ const nameInput = document.querySelector('.js-name-input');
 const professionInput = document.querySelector('.js-profession-input');
 const avatarUrlInput = document.querySelector('.js-img-url-input');
 const contactInput = document.querySelector('.js-contact-input');
-const formEl = document.querySelector('.card-edit-form')
+const formEl = document.querySelector('.card-edit-form');
+const pageElement = document.querySelector('.page');
 
 let firstCard = {
   name: cardPersonNameEL.textContent,
@@ -108,7 +109,6 @@ let updateCard = () => {
   }
   toggleModal();
 }
-
 
 modalCloseButtonEl.addEventListener('click', () => {
   toggleModal();
