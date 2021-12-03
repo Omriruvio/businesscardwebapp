@@ -125,4 +125,5 @@ cardAddButtonEl.addEventListener('click', () => {
 
 let toggleModal = () => {
   modalEl.classList.toggle('card-edit-modal_active');
+  nameInput.focus();
 }

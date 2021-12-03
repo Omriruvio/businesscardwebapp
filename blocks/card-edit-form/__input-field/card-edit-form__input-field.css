@@ -1,5 +1,10 @@
 .card-edit-form__input-field {
   width: 70%;
+  background-color: antiquewhite;
+  border: none;
+  border-radius: 5px;
+  padding-left: 0.4em;
+  outline: none;
 }
 
 @media screen and (max-width: 510px) {

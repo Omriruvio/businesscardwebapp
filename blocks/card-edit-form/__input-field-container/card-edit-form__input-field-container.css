@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   width: 85%;
+  line-height: 1.5em;
 }
 
 @media screen and (max-width: 510px) {
