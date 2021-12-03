@@ -2,6 +2,7 @@ let cards = [];
 let isCardNew = false;
 let currentCardNumber;
 let currentCardElement;
+let randomAvatarLength = 12;
 
 const cardEditButtonEl = document.querySelector('.card__edit-button');
 const modalEl = document.querySelector('.card-edit-modal');
@@ -29,6 +30,11 @@ let firstCard = {
 }
 cards.push(firstCard);
 
+let getRandomAvatarUrl = () => {
+  let randomIndex = Math.floor(Math.random()*randomAvatarLength) +1;
+  let randomAvatarUrl = './images/random-avatar-' + randomIndex + '.svg';
+  return randomAvatarUrl;
+}
 
 let newCard = () => {
   let card = {
@@ -115,7 +121,7 @@ cardAddButtonEl.addEventListener('click', () => {
   nameInput.value = 'Your name';
   professionInput.value = 'Your profession / education';
   contactInput.value = 'Your contact information';
-  avatarUrlInput.value = 'Your avatar link';
+  avatarUrlInput.value = getRandomAvatarUrl();
 })
 
 let toggleModal = () => {
