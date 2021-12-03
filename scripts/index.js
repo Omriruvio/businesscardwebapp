@@ -1,42 +1,34 @@
 let cards = [];
 let isCardNew = false;
+let currentCardNumber;
+let currentCardElement;
 
 const cardEditButtonEl = document.querySelector('.card__edit-button');
 const modalEl = document.querySelector('.card-edit-modal');
 const modalCloseButtonEl = document.querySelector('.card-edit-modal__close-button');
 const cardAddButtonEl = document.querySelector('.card__add-button');
 
-// select card person name element
 const cardPersonNameEL = document.querySelector('.card__person-name');
-// select card person profession element
 const cardPersonProfessionEL = document.querySelector('.card__person-profession');
-// select card person image element
 const cardPersonAvatarEL = document.querySelector('.card__person-avatar');
-// select card person contact info element
 const cardPersonContactEL = document.querySelector('.card__person-contact-info');
-// select first card element (prototype)
-const cardPrototypeEl = document.querySelector('.card');
-// select the full card list
+const cardPrototypeEl = document.querySelector('.card')
 const cardListEl = document.querySelector('.card-list');
-
-// select name input field
 const nameInput = document.querySelector('.js-name-input');
-// select profesison input field
 const professionInput = document.querySelector('.js-profession-input');
-// select avatar url input field
 const avatarUrlInput = document.querySelector('.js-img-url-input');
-// select contact info input field
 const contactInput = document.querySelector('.js-contact-input');
-
-// select submit button element
-// const submitButtonEl = document.querySelector('.card-edit-form__submit-button')
-
-// select form element 
 const formEl = document.querySelector('.card-edit-form')
 
-let toggleModal = () => {
-  modalEl.classList.toggle('card-edit-modal_active');
+let firstCard = {
+  name: cardPersonNameEL.textContent,
+  profession: cardPersonProfessionEL.textContent,
+  contact: cardPersonContactEL.textContent,
+  image: cardPersonAvatarEL.currentSrc,
+  serial: 0
 }
+cards.push(firstCard);
+
 
 let newCard = () => {
   let card = {
@@ -44,28 +36,34 @@ let newCard = () => {
     profession: professionInput.value,
     contact: contactInput.value,
     image: avatarUrlInput.value,
-    serial: cards.length + 1,
+    serial: cards.length,
   }
   return card;
 }
 
+let getCurrentCardElement = (event) => {
+  let target = event.target.parentNode.className; 
+  target = target[target.length-1];
+  currentCardNumber = target;
+  currentCardElement = document.querySelector('.card-id-' + currentCardNumber);
+}
 
-cardEditButtonEl.addEventListener('click', () => {
+
+cardEditButtonEl.addEventListener('click', (event) => {
   // add selector based on card array position
   toggleModal();
-  nameInput.value = cardPersonNameEL.textContent;
-  professionInput.value = cardPersonProfessionEL.textContent;
-  contactInput.value = cardPersonContactEL.textContent;
+  getCurrentCardElement(event);
+  nameInput.value = cards[currentCardNumber].name;
+  professionInput.value = cards[currentCardNumber].profession;
+  contactInput.value = cards[currentCardNumber].contact;
+  avatarUrlInput.value = cards[currentCardNumber].image;
+
   // add image url fetching
 })
 
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
-
-  
   updateCard();
-
-  // add image changing functionality
 })
 
 // add click outside modal to close functinoality 
@@ -79,21 +77,30 @@ let updateCard = () => {
     let currentCard = newCard();  
     cards.push(currentCard)
     let newCardElement = cardPrototypeEl.cloneNode(true);
-    newCardElement.classList.add('card'+'-id-'+currentCard.serial)
-    // select each editable field and update according to currentCard object
+    newCardElement.classList.remove('card-id-0');
+    newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
     newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
     newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
     newCardElement.querySelector('.card__person-avatar').textContent = currentCard.image;
     newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
+    newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
+      toggleModal();
+      getCurrentCardElement(event);
+      nameInput.value = cards[currentCardNumber].name;
+      professionInput.value = cards[currentCardNumber].profession;
+      contactInput.value = cards[currentCardNumber].contact;
+      avatarUrlInput.value = cards[currentCardNumber].image;
+    })
     newCardElement.serial = currentCard.serial;
-    cardListEl.appendChild(newCardElement) 
+    cardListEl.appendChild(newCardElement);
+    isCardNew = false;
   } else {
-    // else apply change to edited card
-    cardPersonNameEL.textContent = nameInput.value;
-    cardPersonProfessionEL.textContent = professionInput.value;
-    cardPersonContactEL.textContent = contactInput.value;    
+    let currentCard = document.querySelector('.card-id-' + currentCardNumber);
+    currentCard.querySelector('.card__person-name').textContent = nameInput.value;
+    currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
+    currentCard.querySelector('.card__person-avatar').textContent = avatarUrlInput.value;
+    currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
   }
-  isCardNew = false;
   toggleModal();
 }
 
@@ -105,4 +112,12 @@ modalCloseButtonEl.addEventListener('click', () => {
 cardAddButtonEl.addEventListener('click', () => {
   toggleModal();
   isCardNew = true;
+  nameInput.value = 'Your name';
+  professionInput.value = 'Your profession / education';
+  contactInput.value = 'Your contact information';
+  avatarUrlInput.value = 'Your avatar link';
 })
+
+let toggleModal = () => {
+  modalEl.classList.toggle('card-edit-modal_active');
+}
