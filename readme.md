@@ -41,21 +41,22 @@ A website for creating business cards, enabling editing, changing images, and te
 
 - [x] Add basic card styling
 - [x] Add basic editing functionality
-- [ ] Add create a new card capability
+- [x] Add create a new card capability
 - [ ] Add local storage persistence
 - [ ] Add form validation
 - [ ] Add additional customization for cards
   - [ ] Color picker
   - [ ] Preset avatars
   - [ ] Custom avatars
-- [ ] Improve responsiveness for different resolutions
-  - [ ] 320px - 550px
-  - [ ] - > 1280px
+- [x] Improve responsiveness for different resolutions
+  - [x] 320px - 550px
+  - [x] - > 1280px
 - [ ] Add links and link editing to cards
 - [ ] Add preset templates of cards
 - [ ] Implement dark/light mode compatibility
 - [ ] Add server based persistence
 - [ ] Check loading times and add loading spinners where necessary
+- [ ] Add ability to share image of your business card
 
 ### Contact
 
