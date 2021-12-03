@@ -81,7 +81,7 @@ let updateCard = () => {
     newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
     newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
     newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
-    newCardElement.querySelector('.card__person-avatar').textContent = currentCard.image;
+    newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
     newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
     newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
       toggleModal();
@@ -98,7 +98,7 @@ let updateCard = () => {
     let currentCard = document.querySelector('.card-id-' + currentCardNumber);
     currentCard.querySelector('.card__person-name').textContent = nameInput.value;
     currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
-    currentCard.querySelector('.card__person-avatar').textContent = avatarUrlInput.value;
+    currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
     currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
   }
   toggleModal();
