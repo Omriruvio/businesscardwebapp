@@ -63,8 +63,6 @@ cardEditButtonEl.addEventListener('click', (event) => {
   professionInput.value = cards[currentCardNumber].profession;
   contactInput.value = cards[currentCardNumber].contact;
   avatarUrlInput.value = cards[currentCardNumber].image;
-
-  // add image url fetching
 })
 
 formEl.addEventListener('submit', (event) => {
@@ -73,9 +71,6 @@ formEl.addEventListener('submit', (event) => {
 })
 
 // add click outside modal to close functinoality 
-// modalEl.addEventListener('click', () => {
-//   modalEl.classList.remove('card-edit-modal_active')
-// })
 
 let updateCard = () => {
   // if card is new create new card and add to array
@@ -106,6 +101,10 @@ let updateCard = () => {
     currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
     currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
     currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
+    currentCard.name = nameInput.value;
+    currentCard.profession = professionInput.value;
+    currentCard.image = avatarUrlInput.value;
+    currentCard.contact  = contactInput.value;
   }
   toggleModal();
 }
