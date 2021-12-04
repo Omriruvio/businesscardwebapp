@@ -1,0 +1,13 @@
+.card-button {
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  /* border: 1px dashed black; */
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

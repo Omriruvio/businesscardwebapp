@@ -2,3 +2,9 @@
   margin: 0;
   text-align: center;
 }
+
+@media screen and (max-width: 320px) {
+  .card__person-profession {
+    max-width: 220px;
+  }
+}

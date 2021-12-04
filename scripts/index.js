@@ -8,6 +8,7 @@ const cardEditButtonEl = document.querySelector('.card__edit-button');
 const modalEl = document.querySelector('.card-edit-modal');
 const modalCloseButtonEl = document.querySelector('.card-edit-modal__close-button');
 const cardAddButtonEl = document.querySelector('.card__add-button');
+const cardDeleteButtonEl = document.querySelector('.card__delete-button');
 
 const cardPersonNameEL = document.querySelector('.card__person-name');
 const cardPersonProfessionEL = document.querySelector('.card__person-profession');
@@ -21,6 +22,9 @@ const avatarUrlInput = document.querySelector('.js-img-url-input');
 const contactInput = document.querySelector('.js-contact-input');
 const formEl = document.querySelector('.card-edit-form');
 const pageElement = document.querySelector('.page');
+
+cardPrototypeEl.id = 0;
+
 
 let firstCard = {
   name: cardPersonNameEL.textContent,
@@ -49,10 +53,10 @@ let newCard = () => {
 }
 
 let getCurrentCardElement = (event) => {
-  let target = event.target.parentNode.className; 
-  target = target[target.length-1];
+  let target = event.target.parentNode.id; 
   currentCardNumber = target;
   currentCardElement = document.querySelector('.card-id-' + currentCardNumber);
+  console.log('current card id is: ' + currentCardNumber);
 }
 
 
@@ -71,6 +75,13 @@ formEl.addEventListener('submit', (event) => {
   updateCard();
 })
 
+cardDeleteButtonEl.addEventListener('click', (event) => {
+  getCurrentCardElement(event);
+  console.log(currentCardElement);
+  currentCardElement.remove();
+  // add remove card functinoality to cards array
+})
+
 // add click outside modal to close functinoality 
 
 let updateCard = () => {
@@ -85,6 +96,7 @@ let updateCard = () => {
     newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
     newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
     newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
+    newCardElement.id = currentCard.serial;
     newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
       toggleModal();
       getCurrentCardElement(event);
@@ -92,6 +104,12 @@ let updateCard = () => {
       professionInput.value = cards[currentCardNumber].profession;
       contactInput.value = cards[currentCardNumber].contact;
       avatarUrlInput.value = cards[currentCardNumber].image;
+    })
+    newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
+      getCurrentCardElement(event);
+      console.log(currentCardElement);
+      currentCardElement.remove();
+      // add remove card from cards array
     })
     newCardElement.serial = currentCard.serial;
     cardListEl.appendChild(newCardElement);
@@ -102,10 +120,10 @@ let updateCard = () => {
     currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
     currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
     currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
-    currentCard.name = nameInput.value;
-    currentCard.profession = professionInput.value;
-    currentCard.image = avatarUrlInput.value;
-    currentCard.contact  = contactInput.value;
+    cards[currentCardNumber].name = nameInput.value;
+    cards[currentCardNumber].profession = professionInput.value;
+    cards[currentCardNumber].contact = contactInput.value;
+    cards[currentCardNumber].image = avatarUrlInput.value;
   }
   toggleModal();
 }
