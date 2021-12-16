@@ -64,6 +64,6 @@ A website for creating business cards, enabling editing, changing images, and te
 
 Omri Ruvio - [@OmriRuvio](https://twitter.com/omriruvio) - omriruvio@gmail.com
 
-Project Link: [https://omriruvio.github.io/web_project_3/](https://omriruvio.github.io/web_project_3/)
+Project Link: [https://omriruvio.github.io/businesscardwebapp/](https://omriruvio.github.io/businesscardwebapp/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
