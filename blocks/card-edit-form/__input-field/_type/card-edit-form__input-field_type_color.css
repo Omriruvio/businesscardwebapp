@@ -1,0 +1,12 @@
+.card-edit-form__input-field_type_color {
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 50% 50%;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
