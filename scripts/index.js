@@ -1,7 +1,7 @@
 let cards = [];
 let isCardNew = false;
 let currentCardNumber;
-let currentCardElement;
+let currentCardElement = document.querySelector('.card');
 let randomAvatarLength = 12;
 
 const cardEditButtonEl = document.querySelector('.card__edit-button');
@@ -26,12 +26,12 @@ const pageElement = document.querySelector('.page');
 
 cardPrototypeEl.id = 0;
 
-
 let firstCard = {
   name: cardPersonNameEL.textContent,
   profession: cardPersonProfessionEL.textContent,
   contact: cardPersonContactEL.textContent,
   image: cardPersonAvatarEL.currentSrc,
+  color: "#FAEBD7",
   serial: 0
 }
 cards.push(firstCard);
@@ -70,6 +70,7 @@ cardEditButtonEl.addEventListener('click', (event) => {
   professionInput.value = cards[currentCardNumber].profession;
   contactInput.value = cards[currentCardNumber].contact;
   avatarUrlInput.value = cards[currentCardNumber].image;
+  colorInput.value = cards[currentCardNumber].color;
 })
 
 formEl.addEventListener('submit', (event) => {
@@ -81,7 +82,6 @@ cardDeleteButtonEl.addEventListener('click', (event) => {
   getCurrentCardElement(event);
   console.log(currentCardElement);
   currentCardElement.remove();
-  // add remove card functinoality to cards array
 })
 
 // add click outside modal to close functinoality 
@@ -107,6 +107,7 @@ let updateCard = () => {
       professionInput.value = cards[currentCardNumber].profession;
       contactInput.value = cards[currentCardNumber].contact;
       avatarUrlInput.value = cards[currentCardNumber].image;
+      colorInput.value = cards[currentCardNumber].color;
     })
     newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
       getCurrentCardElement(event);
@@ -128,6 +129,7 @@ let updateCard = () => {
     cards[currentCardNumber].profession = professionInput.value;
     cards[currentCardNumber].contact = contactInput.value;
     cards[currentCardNumber].image = avatarUrlInput.value;
+    cards[currentCardNumber].color = colorInput.value;
   }
   toggleModal();
 }
@@ -143,6 +145,7 @@ cardAddButtonEl.addEventListener('click', () => {
   professionInput.value = 'Your profession / education';
   contactInput.value = 'Your contact information';
   avatarUrlInput.value = getRandomAvatarUrl();
+  colorInput.value = '#' + Math.floor(Math.random()*16777215).toString(16); // gets random color
 })
 
 let toggleModal = () => {
