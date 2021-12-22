@@ -61,6 +61,15 @@ let getCurrentCardElement = (event) => {
   console.log('current card id is: ' + currentCardNumber);
 }
 
+const getRandomColor = () => {
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 cardEditButtonEl.addEventListener('click', (event) => {
   // add selector based on card array position
@@ -145,7 +154,7 @@ cardAddButtonEl.addEventListener('click', () => {
   professionInput.value = 'Your profession / education';
   contactInput.value = 'Your contact information';
   avatarUrlInput.value = getRandomAvatarUrl();
-  colorInput.value = '#' + Math.floor(Math.random()*16777215).toString(16); // gets random color
+  colorInput.value = getRandomColor();
 })
 
 let toggleModal = () => {
