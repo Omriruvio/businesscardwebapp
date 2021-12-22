@@ -20,6 +20,7 @@ const nameInput = document.querySelector('.js-name-input');
 const professionInput = document.querySelector('.js-profession-input');
 const avatarUrlInput = document.querySelector('.js-img-url-input');
 const contactInput = document.querySelector('.js-contact-input');
+const colorInput = document.querySelector('.js-color-input');
 const formEl = document.querySelector('.card-edit-form');
 const pageElement = document.querySelector('.page');
 
@@ -48,6 +49,7 @@ let newCard = () => {
     contact: contactInput.value,
     image: avatarUrlInput.value,
     serial: cards.length,
+    color: colorInput.value
   }
   return card;
 }
@@ -96,6 +98,7 @@ let updateCard = () => {
     newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
     newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
     newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
+    newCardElement.style.backgroundColor = currentCard.color;
     newCardElement.id = currentCard.serial;
     newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
       toggleModal();
@@ -120,6 +123,7 @@ let updateCard = () => {
     currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
     currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
     currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
+    currentCard.style.backgroundColor = colorInput.value;
     cards[currentCardNumber].name = nameInput.value;
     cards[currentCardNumber].profession = professionInput.value;
     cards[currentCardNumber].contact = contactInput.value;
