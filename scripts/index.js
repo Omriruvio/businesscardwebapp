@@ -42,7 +42,7 @@ let getRandomAvatarUrl = () => {
   return randomAvatarUrl;
 }
 
-let newCard = () => {
+let createNewCard = () => {
   let card = {
     name: nameInput.value,
     profession: professionInput.value,
@@ -68,17 +68,19 @@ const getRandomColor = () => {
   return color;
 }
 
-
-cardEditButtonEl.addEventListener('click', (event) => {
-  // add selector based on card array position
+const handleEditButtonClick = (event) => {
   toggleModal();
   getCurrentCardElement(event);
-  nameInput.value = cards[currentCardNumber].name;
-  professionInput.value = cards[currentCardNumber].profession;
-  contactInput.value = cards[currentCardNumber].contact;
-  avatarUrlInput.value = cards[currentCardNumber].image;
-  colorInput.value = cards[currentCardNumber].color;
-})
+  const currentCardID = event.target.closest('.card').id;
+  nameInput.value = cards[currentCardID].name;
+  professionInput.value = cards[currentCardID].profession;
+  contactInput.value = cards[currentCardID].contact;
+  avatarUrlInput.value = cards[currentCardID].image;
+  colorInput.value = cards[currentCardID].color;
+}
+
+
+cardEditButtonEl.addEventListener('click', (event) => handleEditButtonClick(event));
 
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -91,43 +93,40 @@ cardDeleteButtonEl.addEventListener('click', (event) => {
   currentCardElement.remove();
 })
 
+const createNewCardFromInput = () => {
+      // calls a function that pulls the data from the user input and saves card obj in currentCard
+      let currentCard = createNewCard();  
+      // saves card info in cards array (for reasons yet to be decided)
+      cards.push(currentCard)
+      let newCardElement = cardPrototypeEl.cloneNode(true);
+      newCardElement.classList.remove('card-id-0');
+      newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
+      newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
+      newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
+      newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
+      newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
+      newCardElement.style.backgroundColor = currentCard.color;
+      newCardElement.id = currentCard.serial;
+      newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => handleEditButtonClick(event));
+      newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
+        getCurrentCardElement(event);
+        console.log(currentCardElement);
+        currentCardElement.remove();
+        // add remove card from cards array
+      })
+      newCardElement.serial = currentCard.serial;
+      return newCardElement;
+}
+
 // add click outside modal to close functinoality 
 
 let updateCard = () => {
   // if card is new create new card and add to array
   if (isCardNew) {
-    // calls a function that pulls the data from the user input and saves card obj in currentCard
-    let currentCard = newCard();  
-    // saves card info in cards array (for reasons yet to be decided)
-    cards.push(currentCard)
-    let newCardElement = cardPrototypeEl.cloneNode(true);
-    newCardElement.classList.remove('card-id-0');
-    newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
-    newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
-    newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
-    newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
-    newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
-    newCardElement.style.backgroundColor = currentCard.color;
-    newCardElement.id = currentCard.serial;
-    newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
-      toggleModal();
-      getCurrentCardElement(event);
-      nameInput.value = cards[currentCardNumber].name;
-      professionInput.value = cards[currentCardNumber].profession;
-      contactInput.value = cards[currentCardNumber].contact;
-      avatarUrlInput.value = cards[currentCardNumber].image;
-      colorInput.value = cards[currentCardNumber].color;
-    })
-    newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
-      getCurrentCardElement(event);
-      console.log(currentCardElement);
-      currentCardElement.remove();
-      // add remove card from cards array
-    })
-    newCardElement.serial = currentCard.serial;
+    const newCardElement = createNewCardFromInput()
     cardListEl.appendChild(newCardElement);
     isCardNew = false;
-  } else {
+  } else { // if card is not new
     let currentCard = document.querySelector('.card-id-' + currentCardNumber);
     currentCard.querySelector('.card__person-name').textContent = nameInput.value;
     currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
