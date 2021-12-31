@@ -1,8 +1,7 @@
-let cards = [];
+const cards = [];
 let isCardNew = false;
-let currentCardNumber;
 let currentCardElement = document.querySelector('.card');
-let randomAvatarLength = 12;
+const randomAvatarLength = 12;
 
 const cardEditButtonEl = document.querySelector('.card__edit-button');
 const modalEl = document.querySelector('.card-edit-modal');
@@ -26,7 +25,8 @@ const pageElement = document.querySelector('.page');
 
 cardPrototypeEl.id = 0;
 
-let firstCard = {
+// add initial card to cards array
+cards[0] = {
   name: cardPersonNameEL.textContent,
   profession: cardPersonProfessionEL.textContent,
   contact: cardPersonContactEL.textContent,
@@ -34,16 +34,20 @@ let firstCard = {
   color: "#FAEBD7",
   serial: 0
 }
-cards.push(firstCard);
 
-let getRandomAvatarUrl = () => {
+function toggleModal () {
+  modalEl.classList.toggle('card-edit-modal_active');
+  nameInput.focus();
+}
+
+function getRandomAvatarUrl () {
   let randomIndex = Math.floor(Math.random()*randomAvatarLength) +1;
   let randomAvatarUrl = './images/random-avatar-' + randomIndex + '.svg';
   return randomAvatarUrl;
 }
 
-let newCard = () => {
-  let card = {
+function createNewCard () {
+  const card = {
     name: nameInput.value,
     profession: professionInput.value,
     contact: contactInput.value,
@@ -54,13 +58,13 @@ let newCard = () => {
   return card;
 }
 
-let getCurrentCardElement = (event) => {
-  currentCardNumber = event.target.parentNode.id; 
-  currentCardElement = document.querySelector('.card-id-' + currentCardNumber);
+function getCurrentCardElement (event) {
+  const cardId = event.target.parentNode.id; 
+  currentCardElement = document.querySelector('.card-id-' + cardId);
 }
 
-const getRandomColor = () => {
-  let letters = '0123456789ABCDEF';
+function getRandomColor () {
+  const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
@@ -68,83 +72,78 @@ const getRandomColor = () => {
   return color;
 }
 
-
-cardEditButtonEl.addEventListener('click', (event) => {
-  // add selector based on card array position
+function handleEditButtonClick (event) {
   toggleModal();
   getCurrentCardElement(event);
-  nameInput.value = cards[currentCardNumber].name;
-  professionInput.value = cards[currentCardNumber].profession;
-  contactInput.value = cards[currentCardNumber].contact;
-  avatarUrlInput.value = cards[currentCardNumber].image;
-  colorInput.value = cards[currentCardNumber].color;
-})
+  const currentCardID = event.target.closest('.card').id;
+  nameInput.value = cards[currentCardID].name;
+  professionInput.value = cards[currentCardID].profession;
+  contactInput.value = cards[currentCardID].contact;
+  avatarUrlInput.value = cards[currentCardID].image;
+  colorInput.value = cards[currentCardID].color;
+}
 
-formEl.addEventListener('submit', (event) => {
-  event.preventDefault();
-  updateCard();
-})
-
-cardDeleteButtonEl.addEventListener('click', (event) => {
-  getCurrentCardElement(event);
-  console.log(currentCardElement);
-  currentCardElement.remove();
-})
+function createNewCardFromInput () {
+      // calls a function that pulls the data from the user input and saves card obj in currentCard
+      const currentCard = createNewCard();  
+      // saves card info in cards array
+      cards.push(currentCard)
+      const newCardElement = cardPrototypeEl.cloneNode(true);
+      newCardElement.classList.remove('card-id-0');
+      newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
+      newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
+      newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
+      newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
+      newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
+      newCardElement.style.backgroundColor = currentCard.color;
+      newCardElement.id = currentCard.serial;
+      newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => handleEditButtonClick(event));
+      newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
+        getCurrentCardElement(event);
+        currentCardElement.remove();
+        // add remove card from cards array
+      })
+      newCardElement.serial = currentCard.serial;
+      return newCardElement;
+}
 
 // add click outside modal to close functinoality 
 
-let updateCard = () => {
+function updateCard (card) {
   // if card is new create new card and add to array
   if (isCardNew) {
-    // calls a function that pulls the data from the user input and saves card obj in currentCard
-    let currentCard = newCard();  
-    // saves card info in cards array (for reasons yet to be decided)
-    cards.push(currentCard)
-    let newCardElement = cardPrototypeEl.cloneNode(true);
-    newCardElement.classList.remove('card-id-0');
-    newCardElement.classList.add('card'+'-id-'+ currentCard.serial);
-    newCardElement.querySelector('.card__person-name').textContent = currentCard.name;
-    newCardElement.querySelector('.card__person-profession').textContent = currentCard.profession;
-    newCardElement.querySelector('.card__person-avatar').src = currentCard.image;
-    newCardElement.querySelector('.card__person-contact-info').textContent = currentCard.contact;
-    newCardElement.style.backgroundColor = currentCard.color;
-    newCardElement.id = currentCard.serial;
-    newCardElement.querySelector('.card__edit-button').addEventListener('click', (event) => {
-      toggleModal();
-      getCurrentCardElement(event);
-      nameInput.value = cards[currentCardNumber].name;
-      professionInput.value = cards[currentCardNumber].profession;
-      contactInput.value = cards[currentCardNumber].contact;
-      avatarUrlInput.value = cards[currentCardNumber].image;
-      colorInput.value = cards[currentCardNumber].color;
-    })
-    newCardElement.querySelector('.card__delete-button').addEventListener('click', (event) => {
-      getCurrentCardElement(event);
-      console.log(currentCardElement);
-      currentCardElement.remove();
-      // add remove card from cards array
-    })
-    newCardElement.serial = currentCard.serial;
-    cardListEl.appendChild(newCardElement);
+    cardListEl.appendChild(createNewCardFromInput());
     isCardNew = false;
-  } else {
-    let currentCard = document.querySelector('.card-id-' + currentCardNumber);
-    currentCard.querySelector('.card__person-name').textContent = nameInput.value;
-    currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
-    currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
-    currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
-    currentCard.style.backgroundColor = colorInput.value;
-    cards[currentCardNumber].name = nameInput.value;
-    cards[currentCardNumber].profession = professionInput.value;
-    cards[currentCardNumber].contact = contactInput.value;
-    cards[currentCardNumber].image = avatarUrlInput.value;
-    cards[currentCardNumber].color = colorInput.value;
+  } else { // if card is not new
+    card.querySelector('.card__person-name').textContent = nameInput.value;
+    card.querySelector('.card__person-profession').textContent = professionInput.value;
+    card.querySelector('.card__person-avatar').src = avatarUrlInput.value;
+    card.querySelector('.card__person-contact-info').textContent = contactInput.value;
+    card.style.backgroundColor = colorInput.value;
+    cards[card.id].name = nameInput.value;
+    cards[card.id].profession = professionInput.value;
+    cards[card.id].contact = contactInput.value;
+    cards[card.id].image = avatarUrlInput.value;
+    cards[card.id].color = colorInput.value;
   }
   toggleModal();
 }
 
+cardEditButtonEl.addEventListener('click', (event) => handleEditButtonClick(event));
+
+formEl.addEventListener('submit', (event) => {
+  event.preventDefault();
+  updateCard(currentCardElement);
+})
+
+cardDeleteButtonEl.addEventListener('click', (event) => {
+  getCurrentCardElement(event);
+  currentCardElement.remove();
+})
+
 modalCloseButtonEl.addEventListener('click', () => {
   toggleModal();
+  isCardNew = false;
 })
 
 cardAddButtonEl.addEventListener('click', () => {
@@ -156,8 +155,3 @@ cardAddButtonEl.addEventListener('click', () => {
   avatarUrlInput.value = getRandomAvatarUrl();
   colorInput.value = getRandomColor();
 })
-
-let toggleModal = () => {
-  modalEl.classList.toggle('card-edit-modal_active');
-  nameInput.focus();
-}
