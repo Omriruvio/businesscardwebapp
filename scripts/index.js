@@ -1,6 +1,5 @@
 let cards = [];
 let isCardNew = false;
-let currentCardNumber;
 let currentCardElement = document.querySelector('.card');
 let randomAvatarLength = 12;
 
@@ -55,8 +54,8 @@ let createNewCard = () => {
 }
 
 let getCurrentCardElement = (event) => {
-  currentCardNumber = event.target.parentNode.id; 
-  currentCardElement = document.querySelector('.card-id-' + currentCardNumber);
+  const cardId = event.target.parentNode.id; 
+  currentCardElement = document.querySelector('.card-id-' + cardId);
 }
 
 const getRandomColor = () => {
