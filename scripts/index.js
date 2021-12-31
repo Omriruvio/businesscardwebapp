@@ -84,7 +84,7 @@ cardEditButtonEl.addEventListener('click', (event) => handleEditButtonClick(even
 
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
-  updateCard();
+  updateCard(currentCardElement);
 })
 
 cardDeleteButtonEl.addEventListener('click', (event) => {
@@ -120,30 +120,29 @@ const createNewCardFromInput = () => {
 
 // add click outside modal to close functinoality 
 
-let updateCard = () => {
+let updateCard = (card) => {
   // if card is new create new card and add to array
   if (isCardNew) {
-    const newCardElement = createNewCardFromInput()
-    cardListEl.appendChild(newCardElement);
+    cardListEl.appendChild(createNewCardFromInput());
     isCardNew = false;
   } else { // if card is not new
-    let currentCard = document.querySelector('.card-id-' + currentCardNumber);
-    currentCard.querySelector('.card__person-name').textContent = nameInput.value;
-    currentCard.querySelector('.card__person-profession').textContent = professionInput.value;
-    currentCard.querySelector('.card__person-avatar').src = avatarUrlInput.value;
-    currentCard.querySelector('.card__person-contact-info').textContent = contactInput.value;
-    currentCard.style.backgroundColor = colorInput.value;
-    cards[currentCardNumber].name = nameInput.value;
-    cards[currentCardNumber].profession = professionInput.value;
-    cards[currentCardNumber].contact = contactInput.value;
-    cards[currentCardNumber].image = avatarUrlInput.value;
-    cards[currentCardNumber].color = colorInput.value;
+    card.querySelector('.card__person-name').textContent = nameInput.value;
+    card.querySelector('.card__person-profession').textContent = professionInput.value;
+    card.querySelector('.card__person-avatar').src = avatarUrlInput.value;
+    card.querySelector('.card__person-contact-info').textContent = contactInput.value;
+    card.style.backgroundColor = colorInput.value;
+    cards[card.id].name = nameInput.value;
+    cards[card.id].profession = professionInput.value;
+    cards[card.id].contact = contactInput.value;
+    cards[card.id].image = avatarUrlInput.value;
+    cards[card.id].color = colorInput.value;
   }
   toggleModal();
 }
 
 modalCloseButtonEl.addEventListener('click', () => {
   toggleModal();
+  isCardNew = false;
 })
 
 cardAddButtonEl.addEventListener('click', () => {
