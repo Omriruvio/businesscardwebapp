@@ -55,10 +55,8 @@ let newCard = () => {
 }
 
 let getCurrentCardElement = (event) => {
-  let target = event.target.parentNode.id; 
-  currentCardNumber = target;
+  currentCardNumber = event.target.parentNode.id; 
   currentCardElement = document.querySelector('.card-id-' + currentCardNumber);
-  console.log('current card id is: ' + currentCardNumber);
 }
 
 const getRandomColor = () => {
@@ -98,7 +96,9 @@ cardDeleteButtonEl.addEventListener('click', (event) => {
 let updateCard = () => {
   // if card is new create new card and add to array
   if (isCardNew) {
+    // calls a function that pulls the data from the user input and saves card obj in currentCard
     let currentCard = newCard();  
+    // saves card info in cards array (for reasons yet to be decided)
     cards.push(currentCard)
     let newCardElement = cardPrototypeEl.cloneNode(true);
     newCardElement.classList.remove('card-id-0');
