@@ -13,7 +13,10 @@
     <main class="main-content">
       <div class="card-edit-modal">
         <div class="card-edit-modal__window">
-          <button class="card-edit-modal__close-button"></button>
+          <button
+            class="card-edit-modal__close-button"
+            title="Discard"
+          ></button>
           <h2 class="card-edit-modal__title">Edit your card</h2>
           <form class="card-edit-form">
             <input
@@ -23,6 +26,7 @@
                 card-edit-form__input-field_type_color
                 js-color-input
               "
+              title="Choose background color"
             />
             <label class="card-edit-form__input-field-container">
               Name:
@@ -70,8 +74,11 @@
           <p class="card__person-contact-info">
             +972.58.740.0020 | omri@cyber.games | cyber.games
           </p>
-          <button class="card-button card__edit-button"></button>
-          <button class="card-button card__delete-button"></button>
+          <button class="card-button card__edit-button" title="Edit"></button>
+          <button
+            class="card-button card__delete-button"
+            title="Delete"
+          ></button>
         </li>
       </ul>
       <div class="card card_template">
@@ -85,7 +92,7 @@
         <p class="card__person-contact-info">
           Contact Info | Avatars Made With | avatarmaker.com
         </p>
-        <button class="card__add-button"></button>
+        <button class="card__add-button" title="Add"></button>
       </div>
     </main>
     <footer></footer>
