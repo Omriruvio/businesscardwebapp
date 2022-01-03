@@ -12,92 +12,58 @@
   <body class="page">
     <header></header>
     <main class="main-content">
-      <div class="card-edit-modal">
-        <div class="card-edit-modal__window">
-          <button
-            class="card-edit-modal__close-button"
-            title="Discard"
-          ></button>
-          <h2 class="card-edit-modal__title">Edit your card</h2>
+      <div class="modal">
+        <div class="modal__window">
+          <button class="modal__close-button" title="Discard"></button>
+          <h2 class="modal__title">Edit your card</h2>
           <form class="card-edit-form">
             <input
               type="color"
-              class="
-                card-edit-form__input-field
-                card-edit-form__input-field_type_color
-                js-color-input
-              "
+              class="card-edit-form__input-field card-edit-form__input-field_type_color js-color-input"
               title="Choose background color"
             />
             <label class="card-edit-form__input-field-container">
               Name:
-              <input
-                type="text"
-                class="card-edit-form__input-field js-name-input"
-              />
+              <input type="text" class="card-edit-form__input-field js-name-input" />
             </label>
             <label class="card-edit-form__input-field-container">
               Profession:
-              <input
-                type="text"
-                class="card-edit-form__input-field js-profession-input"
-              />
+              <input type="text" class="card-edit-form__input-field js-profession-input" />
             </label>
             <label class="card-edit-form__input-field-container">
               Image URL:
-              <input
-                type="text"
-                class="card-edit-form__input-field js-img-url-input"
-              />
+              <input type="text" class="card-edit-form__input-field js-img-url-input" />
             </label>
             <label class="card-edit-form__input-field-container">
               Contact details:
-              <input
-                type="text"
-                class="card-edit-form__input-field js-contact-input"
-              />
+              <input type="text" class="card-edit-form__input-field js-contact-input" />
             </label>
-            <button type="submit" class="card-edit-form__submit-button">
-              Save
-            </button>
+            <button type="submit" class="card-edit-form__submit-button">Save</button>
           </form>
+        </div>
+      </div>
+      <div class="modal modal_type_preview">
+        <div class="modal__window">
+          <button class="modal__close-button" title="Discard"></button>
+          <h2 class="modal__title">Card export & preview</h2>
         </div>
       </div>
       <ul class="card-list">
         <li class="card card-id-0">
           <h2 class="card__person-name">Omri Ruvio</h2>
           <p class="card__person-profession">Co-Founder & CEO @ CyberGames</p>
-          <img
-            src="./images/omri-avatar.svg"
-            alt=""
-            class="card__person-avatar"
-          />
-          <p class="card__person-contact-info">
-            +972.58.740.0020 | omri@cyber.games | cyber.games
-          </p>
+          <img src="./images/omri-avatar.svg" alt="" class="card__person-avatar" />
+          <p class="card__person-contact-info">+972.58.740.0020 | omri@cyber.games | cyber.games</p>
           <button class="card-button card__edit-button" title="Edit"></button>
-          <button
-            class="card-button card__delete-button"
-            title="Delete"
-          ></button>
-          <button
-            class="card-button card__capture-button"
-            title="Download card as image"
-            data-html2canvas-ignore="true"
-          ></button>
+          <button class="card-button card__delete-button" title="Delete"></button>
+          <button class="card-button card__capture-button" title="Download card as image" data-html2canvas-ignore="true"></button>
         </li>
       </ul>
       <div class="card card_template">
         <h2 class="card__person-name">Your Name</h2>
         <p class="card__person-profession">Your profession & education</p>
-        <img
-          src="./images/default-avatar-template.svg"
-          alt=""
-          class="card__person-avatar"
-        />
-        <p class="card__person-contact-info">
-          Contact Info | Avatars Made With | avatarmaker.com
-        </p>
+        <img src="./images/default-avatar-template.svg" alt="" class="card__person-avatar" />
+        <p class="card__person-contact-info">Contact Info | Avatars Made With | avatarmaker.com</p>
         <button class="card__add-button" title="Add"></button>
       </div>
       <div class="capture-window"></div>

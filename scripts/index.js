@@ -4,10 +4,8 @@ let currentCardElement = document.querySelector(".card");
 const randomAvatarLength = 12;
 
 const cardEditButtonEl = document.querySelector(".card__edit-button");
-const modalEl = document.querySelector(".card-edit-modal");
-const modalCloseButtonEl = document.querySelector(
-  ".card-edit-modal__close-button"
-);
+const modalEl = document.querySelector(".modal");
+const modalCloseButtonEl = document.querySelector(".modal__close-button");
 const cardAddButtonEl = document.querySelector(".card__add-button");
 const cardDeleteButtonEl = document.querySelector(".card__delete-button");
 
@@ -48,7 +46,7 @@ cards[0] = {
 };
 
 function toggleModal() {
-  modalEl.classList.toggle("card-edit-modal_active");
+  modalEl.classList.toggle("modal_active");
   nameInput.focus();
 }
 
@@ -103,13 +101,10 @@ function createNewCardFromInput() {
   const newCardElement = cardPrototypeEl.cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
-  newCardElement.querySelector(".card__person-name").textContent =
-    currentCard.name;
-  newCardElement.querySelector(".card__person-profession").textContent =
-    currentCard.profession;
+  newCardElement.querySelector(".card__person-name").textContent = currentCard.name;
+  newCardElement.querySelector(".card__person-profession").textContent = currentCard.profession;
   newCardElement.querySelector(".card__person-avatar").src = currentCard.image;
-  newCardElement.querySelector(".card__person-contact-info").textContent =
-    currentCard.contact;
+  newCardElement.querySelector(".card__person-contact-info").textContent = currentCard.contact;
   newCardElement.style.backgroundColor = currentCard.color;
   newCardElement.id = currentCard.serial;
   newCardElement

@@ -1,4 +1,4 @@
-.card-edit-modal__window {
+.modal__window {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -17,7 +17,7 @@
 }
 
 @media screen and (max-width: 510px) {
-  .card-edit-modal__window {
+  .modal__window {
     margin-left: -150px;
     margin-top: -150px;
     max-width: 300px;
@@ -29,6 +29,6 @@
 }
 
 @media screen and (max-width: 400px) {
-  .card-edit-modal__window {
+  .modal__window {
   }
 }
