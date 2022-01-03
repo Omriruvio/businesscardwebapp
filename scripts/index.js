@@ -1,5 +1,3 @@
-import html2canvas from "../vendor/html2canvas";
-
 const cards = [];
 let isCardNew = false;
 let currentCardElement = document.querySelector(".card");
@@ -178,6 +176,8 @@ cardAddButtonEl.addEventListener("click", () => {
   avatarUrlInput.value = getRandomAvatarUrl();
   colorInput.value = getRandomColor();
 });
+
+import html2canvas from "../vendor/html2canvas";
 
 cardCaptureButtonEl.addEventListener("click", (event) => {
   getCurrentCardElement(event);
