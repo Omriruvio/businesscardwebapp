@@ -7,6 +7,7 @@
     <title>Business Cards App</title>
     <link rel="stylesheet" href="./pages/index.css" />
     <link rel="icon" href="./images/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
   </head>
   <body class="page">
     <header></header>
@@ -82,6 +83,7 @@
           <button
             class="card-button card__capture-button"
             title="Capture card as image"
+            data-html2canvas-ignore="true"
           ></button>
         </li>
       </ul>
@@ -98,8 +100,9 @@
         </p>
         <button class="card__add-button" title="Add"></button>
       </div>
+      <div class="capture-window"></div>
     </main>
     <footer></footer>
-    <script type="module" src="./scripts/index.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

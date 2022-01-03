@@ -14,6 +14,9 @@ const cardDeleteButtonEl = document.querySelector(".card__delete-button");
 // declare the element of the "Capture" icon: //
 const cardCaptureButtonEl = document.querySelector(".card__capture-button");
 
+// declare the element of the Capture-window : //
+const capureWindow = document.querySelector(".capture-window");
+
 const cardPersonNameEL = document.querySelector(".card__person-name");
 const cardPersonProfessionEL = document.querySelector(
   ".card__person-profession"
@@ -119,7 +122,14 @@ function createNewCardFromInput() {
       currentCardElement.remove();
       // add remove card from cards array
     });
-  newCardElement.serial = currentCard.serial;
+  newCardElement
+    .querySelector(".card__capture-button")
+    .addEventListener("click", (event) => {
+      getCurrentCardElement(event);
+      html2canvas(currentCardElement).then(function (canvas) {
+        capureWindow.appendChild(canvas);
+      });
+    });
   return newCardElement;
 }
 
@@ -177,9 +187,9 @@ cardAddButtonEl.addEventListener("click", () => {
   colorInput.value = getRandomColor();
 });
 
-import html2canvas from "../vendor/html2canvas";
-
 cardCaptureButtonEl.addEventListener("click", (event) => {
   getCurrentCardElement(event);
-  html2canvas(currentCardElement);
+  html2canvas(currentCardElement).then(function (canvas) {
+    capureWindow.appendChild(canvas);
+  });
 });
