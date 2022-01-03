@@ -1,0 +1,10 @@
+.card__capture-button {
+  background-image: url(../../../images/capture-button.svg);
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
