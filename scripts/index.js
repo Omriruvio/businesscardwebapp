@@ -4,18 +4,19 @@ let currentCardElement = document.querySelector(".card");
 const randomAvatarLength = 12;
 
 const cardEditButtonEl = document.querySelector(".card__edit-button");
-const modalEl = document.querySelector(".card-edit-modal");
-const modalCloseButtonEl = document.querySelector(
-  ".card-edit-modal__close-button"
-);
+const modalCardEl = document.querySelector(".modal_type_card");
+const modalPreviewEl = document.querySelector(".modal_type_preview");
+const cardModalCloseButtonEl = document.querySelector(".modal_type_card .modal__close-button");
+const previewModalCloseButtonEl = document.querySelector(".modal_type_preview .modal__close-button");
 const cardAddButtonEl = document.querySelector(".card__add-button");
 const cardDeleteButtonEl = document.querySelector(".card__delete-button");
+const exportButtonEl = document.querySelector(".export-button");
 
 // declare the element of the "Capture" icon: //
 const cardCaptureButtonEl = document.querySelector(".card__capture-button");
 
 // declare the element of the Capture-window : //
-const capureWindow = document.querySelector(".capture-window");
+const captureWindow = document.querySelector(".capture-window");
 
 const cardPersonNameEL = document.querySelector(".card__person-name");
 const cardPersonProfessionEL = document.querySelector(
@@ -47,8 +48,8 @@ cards[0] = {
   serial: 0,
 };
 
-function toggleModal() {
-  modalEl.classList.toggle("card-edit-modal_active");
+function toggleModal(modal) {
+  modal.classList.toggle("modal_active");
   nameInput.focus();
 }
 
@@ -85,7 +86,7 @@ function getRandomColor() {
 }
 
 function handleEditButtonClick(event) {
-  toggleModal();
+  toggleModal(modalCardEl);
   getCurrentCardElement(event);
   const currentCardID = event.target.closest(".card").id;
   nameInput.value = cards[currentCardID].name;
@@ -103,13 +104,10 @@ function createNewCardFromInput() {
   const newCardElement = cardPrototypeEl.cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
-  newCardElement.querySelector(".card__person-name").textContent =
-    currentCard.name;
-  newCardElement.querySelector(".card__person-profession").textContent =
-    currentCard.profession;
+  newCardElement.querySelector(".card__person-name").textContent = currentCard.name;
+  newCardElement.querySelector(".card__person-profession").textContent = currentCard.profession;
   newCardElement.querySelector(".card__person-avatar").src = currentCard.image;
-  newCardElement.querySelector(".card__person-contact-info").textContent =
-    currentCard.contact;
+  newCardElement.querySelector(".card__person-contact-info").textContent = currentCard.contact;
   newCardElement.style.backgroundColor = currentCard.color;
   newCardElement.id = currentCard.serial;
   newCardElement
@@ -125,9 +123,10 @@ function createNewCardFromInput() {
   newCardElement
     .querySelector(".card__capture-button")
     .addEventListener("click", (event) => {
+      toggleModal(modalPreviewEl);
       getCurrentCardElement(event);
       html2canvas(currentCardElement).then(function (canvas) {
-        capureWindow.appendChild(canvas);
+        captureWindow.replaceChildren(canvas);
       });
     });
   return newCardElement;
@@ -155,8 +154,18 @@ function updateCard(card) {
     cards[card.id].image = avatarUrlInput.value;
     cards[card.id].color = colorInput.value;
   }
-  toggleModal();
+  toggleModal(modalCardEl);
 }
+
+function downloadCanvas() {
+  const canvasEl = captureWindow.firstElementChild;
+  const link = document.createElement('a');
+  link.download = 'canvas.png';
+  link.href = canvasEl.toDataURL()
+  link.click();
+}
+
+exportButtonEl.addEventListener("click", downloadCanvas);
 
 cardEditButtonEl.addEventListener("click", (event) =>
   handleEditButtonClick(event)
@@ -172,13 +181,19 @@ cardDeleteButtonEl.addEventListener("click", (event) => {
   currentCardElement.remove();
 });
 
-modalCloseButtonEl.addEventListener("click", () => {
-  toggleModal();
+cardModalCloseButtonEl.addEventListener("click", () => {
+  toggleModal(modalCardEl);
   isCardNew = false;
 });
 
+previewModalCloseButtonEl.addEventListener("click", () => {
+  toggleModal(modalPreviewEl);
+});
+
+
+
 cardAddButtonEl.addEventListener("click", () => {
-  toggleModal();
+  toggleModal(modalCardEl);
   isCardNew = true;
   nameInput.value = "Your name";
   professionInput.value = "Your profession / education";
@@ -188,8 +203,9 @@ cardAddButtonEl.addEventListener("click", () => {
 });
 
 cardCaptureButtonEl.addEventListener("click", (event) => {
+  toggleModal(modalPreviewEl);
   getCurrentCardElement(event);
   html2canvas(currentCardElement).then(function (canvas) {
-    capureWindow.appendChild(canvas);
+    captureWindow.replaceChildren(canvas);
   });
 });

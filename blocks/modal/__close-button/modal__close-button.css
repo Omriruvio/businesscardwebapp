@@ -1,5 +1,5 @@
-.card-edit-modal__close-button {
-  background-image: url("../../../images/modal-close-button.svg");
+.modal__close-button {
+  background-image: url('../../../images/modal-close-button.svg');
   position: absolute;
   top: 15px;
   right: 15px;
