@@ -33,3 +33,4 @@
 @import url('../blocks/card/_template/card_template.css');
 @import url('../blocks/card-edit-form/__input-field/_type/card-edit-form__input-field_type_color.css');
 @import url('../blocks/modal/_type/modal_type_preview.css');
+@import url('../blocks/modal/__window/_type/modal__window_type_preview.css');
