@@ -10,6 +10,7 @@ const cardModalCloseButtonEl = document.querySelector(".modal_type_card .modal__
 const previewModalCloseButtonEl = document.querySelector(".modal_type_preview .modal__close-button");
 const cardAddButtonEl = document.querySelector(".card__add-button");
 const cardDeleteButtonEl = document.querySelector(".card__delete-button");
+const exportButtonEl = document.querySelector(".export-button");
 
 // declare the element of the "Capture" icon: //
 const cardCaptureButtonEl = document.querySelector(".card__capture-button");
@@ -155,6 +156,16 @@ function updateCard(card) {
   }
   toggleModal(modalCardEl);
 }
+
+function downloadCanvas() {
+  const canvasEl = captureWindow.firstElementChild;
+  const link = document.createElement('a');
+  link.download = 'canvas.png';
+  link.href = canvasEl.toDataURL()
+  link.click();
+}
+
+exportButtonEl.addEventListener("click", downloadCanvas);
 
 cardEditButtonEl.addEventListener("click", (event) =>
   handleEditButtonClick(event)
