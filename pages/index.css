@@ -10,6 +10,7 @@
 @import url('../blocks/modal/modal.css');
 @import url('../blocks/card-edit-form/card-edit-form.css');
 @import url('../blocks/card-button/card-button.css');
+@import url('../blocks/capture-window/capture-window.css');
 
 /* Elements */
 @import url('../blocks/card/__person-name/card__person-name.css');
@@ -26,6 +27,7 @@
 @import url('../blocks/card-edit-form/__submit-button/card-edit-form__submit-button.css');
 @import url('../blocks/modal/__close-button/modal__close-button.css');
 @import url('../blocks/card/__add-button/card__add-button.css');
+@import url('../blocks/modal/__preview-wrapper/modal__preview-wrapper.css');
 
 @import url('../blocks/modal/_active/modal_active.css');
 @import url('../blocks/card/_template/card_template.css');
