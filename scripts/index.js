@@ -207,5 +207,6 @@ cardCaptureButtonEl.addEventListener("click", (event) => {
   getCurrentCardElement(event);
   html2canvas(currentCardElement).then(function (canvas) {
     captureWindow.replaceChildren(canvas);
+    captureWindow.firstElementChild.style.maxWidth = "100%";
   });
 });
