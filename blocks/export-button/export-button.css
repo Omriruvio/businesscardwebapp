@@ -1,0 +1,12 @@
+.export-button {
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  cursor: pointer;
+  scale: 1;
+  transition: transform 0.5s;
+}
+
+.export-button:hover {
+  transform: scale(1.3);
+}
