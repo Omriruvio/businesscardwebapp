@@ -255,3 +255,12 @@ cardCaptureButtonEl.addEventListener("click", (event) => {
     captureWindow.firstElementChild.style.maxWidth = "100%";
   });
 });
+
+modalCardEl.addEventListener('click', (event) => {
+  if (event.currentTarget === event.target) toggleModal(modalCardEl)
+});
+
+modalPreviewEl.addEventListener('click', (event) => {
+  if (event.currentTarget === event.target) toggleModal(modalPreviewEl)
+});
+
