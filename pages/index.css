@@ -31,6 +31,7 @@
 @import url('../blocks/card/__add-button/card__add-button.css');
 @import url('../blocks/modal/__preview-wrapper/modal__preview-wrapper.css');
 @import url('../blocks/confirm-banner/__buttons/confirm-banner__buttons.css');
+@import url('../blocks/confirm-banner/__warpper/confirm-banner__wrapper.css');
 
 @import url('../blocks/modal/_active/modal_active.css');
 @import url('../blocks/card/_template/card_template.css');
@@ -39,3 +40,5 @@
 @import url('../blocks/modal/__window/_type/modal__window_type_preview.css');
 @import url('../blocks/button/_type/button_type_confirm.css');
 @import url('../blocks/button/_type/button_type_cancel.css');
+@import url('../blocks/confirm-banner/__warpper/_active/confirm-banner__wrapper_active.css');
+@import url('../blocks/confirm-banner/_active/confirm-banner_active.css');

@@ -1,0 +1,4 @@
+.confirm-banner__wrapper_active {
+  visibility: visible;
+  clip-path: polygon(-11.05% -15.69%, 109.47% -14.13%, 109.21% 117.25%, -10.79% 106.31%);
+}

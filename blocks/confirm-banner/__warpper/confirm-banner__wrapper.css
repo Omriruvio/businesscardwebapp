@@ -1,0 +1,10 @@
+.confirm-banner__wrapper {
+  width: 90%;
+  text-align: center;
+  background-color: #ae3838;
+  padding: 10px;
+  border-radius: 15px;
+  visibility: hidden;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  transition: clip-path 0.3s, visibility 0.3s;
+}

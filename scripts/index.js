@@ -35,6 +35,10 @@ const contactInput = document.querySelector(".js-contact-input");
 const colorInput = document.querySelector(".js-color-input");
 const formEl = document.querySelector(".card-edit-form");
 const pageElement = document.querySelector(".page");
+const confirmBannerEl = document.querySelector(".confirm-banner");
+const confirmBannerWrapper = document.querySelector(".confirm-banner__wrapper");
+const confirmButtonDelete = document.querySelector(".button_type_confirm");
+const confirmButtonCancel = document.querySelector(".button_type_cancel");
 
 cardPrototypeEl.id = 0;
 
@@ -72,7 +76,7 @@ function createNewCard() {
 }
 
 function getCurrentCardElement(event) {
-  const cardId = event.target.parentNode.id;
+  const cardId = event.target.closest('.card').id;
   currentCardElement = document.querySelector(".card-id-" + cardId);
 }
 
@@ -116,9 +120,7 @@ function createNewCardFromInput() {
   newCardElement
     .querySelector(".card__delete-button")
     .addEventListener("click", (event) => {
-      getCurrentCardElement(event);
-      currentCardElement.remove();
-      // add remove card from cards array
+      handleDeleteButtonClick(event);
     });
   newCardElement
     .querySelector(".card__capture-button")
@@ -157,6 +159,30 @@ function updateCard(card) {
   toggleModal(modalCardEl);
 }
 
+function toggleConfirmBanner(card) {
+  const confirmBanner = card.querySelector('.confirm-banner');
+  const confirmWrapper = card.querySelector('.confirm-banner__wrapper');
+  confirmBanner.classList.toggle('confirm-banner_active');
+  confirmWrapper.classList.toggle('confirm-banner__wrapper_active');
+  const confirmDeleteButton = card.querySelector('.button_type_confirm');
+  const cancelDeleteButton = card.querySelector('.button_type_cancel');
+  confirmDeleteButton.addEventListener('click', (event) => {
+    getCurrentCardElement(event);  
+    currentCardElement.remove()
+  });
+  cancelDeleteButton.addEventListener('click', () => { 
+    confirmBanner.classList.remove('confirm-banner_active');
+    confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+   })
+
+}
+
+function handleDeleteButtonClick(event) {
+  getCurrentCardElement(event);
+  toggleConfirmBanner(currentCardElement);
+  // currentCardElement.remove();
+}
+
 function downloadCanvas() {
   const canvasEl = captureWindow.firstElementChild;
   const link = document.createElement('a');
@@ -177,8 +203,7 @@ formEl.addEventListener("submit", (event) => {
 });
 
 cardDeleteButtonEl.addEventListener("click", (event) => {
-  getCurrentCardElement(event);
-  currentCardElement.remove();
+  handleDeleteButtonClick(event);
 });
 
 cardModalCloseButtonEl.addEventListener("click", () => {
