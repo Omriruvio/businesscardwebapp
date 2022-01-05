@@ -6,8 +6,12 @@ const randomAvatarLength = 12;
 const cardEditButtonEl = document.querySelector(".card__edit-button");
 const modalCardEl = document.querySelector(".modal_type_card");
 const modalPreviewEl = document.querySelector(".modal_type_preview");
-const cardModalCloseButtonEl = document.querySelector(".modal_type_card .modal__close-button");
-const previewModalCloseButtonEl = document.querySelector(".modal_type_preview .modal__close-button");
+const cardModalCloseButtonEl = document.querySelector(
+  ".modal_type_card .modal__close-button"
+);
+const previewModalCloseButtonEl = document.querySelector(
+  ".modal_type_preview .modal__close-button"
+);
 const cardAddButtonEl = document.querySelector(".card__add-button");
 const cardDeleteButtonEl = document.querySelector(".card__delete-button");
 const exportButtonEl = document.querySelector(".export-button");
@@ -33,8 +37,13 @@ const professionInput = document.querySelector(".js-profession-input");
 const avatarUrlInput = document.querySelector(".js-img-url-input");
 const contactInput = document.querySelector(".js-contact-input");
 const colorInput = document.querySelector(".js-color-input");
+const textColorInput = document.querySelector(".js-text-color-input");
 const formEl = document.querySelector(".card-edit-form");
 const pageElement = document.querySelector(".page");
+const confirmBannerEl = document.querySelector(".confirm-banner");
+const confirmBannerWrapper = document.querySelector(".confirm-banner__wrapper");
+const confirmButtonDelete = document.querySelector(".button_type_confirm");
+const confirmButtonCancel = document.querySelector(".button_type_cancel");
 
 cardPrototypeEl.id = 0;
 
@@ -45,6 +54,7 @@ cards[0] = {
   contact: cardPersonContactEL.textContent,
   image: cardPersonAvatarEL.currentSrc,
   color: "#FAEBD7",
+  textcolor: "#000000",
   serial: 0,
 };
 
@@ -67,12 +77,13 @@ function createNewCard() {
     image: avatarUrlInput.value,
     serial: cards.length,
     color: colorInput.value,
+    textcolor: textColorInput.value,
   };
   return card;
 }
 
 function getCurrentCardElement(event) {
-  const cardId = event.target.parentNode.id;
+  const cardId = event.target.closest('.card').id;
   currentCardElement = document.querySelector(".card-id-" + cardId);
 }
 
@@ -94,6 +105,7 @@ function handleEditButtonClick(event) {
   contactInput.value = cards[currentCardID].contact;
   avatarUrlInput.value = cards[currentCardID].image;
   colorInput.value = cards[currentCardID].color;
+  textColorInput.value = cards[currentCardID].textcolor;
 }
 
 function createNewCardFromInput() {
@@ -104,11 +116,15 @@ function createNewCardFromInput() {
   const newCardElement = cardPrototypeEl.cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
-  newCardElement.querySelector(".card__person-name").textContent = currentCard.name;
-  newCardElement.querySelector(".card__person-profession").textContent = currentCard.profession;
+  newCardElement.querySelector(".card__person-name").textContent =
+    currentCard.name;
+  newCardElement.querySelector(".card__person-profession").textContent =
+    currentCard.profession;
   newCardElement.querySelector(".card__person-avatar").src = currentCard.image;
-  newCardElement.querySelector(".card__person-contact-info").textContent = currentCard.contact;
+  newCardElement.querySelector(".card__person-contact-info").textContent =
+    currentCard.contact;
   newCardElement.style.backgroundColor = currentCard.color;
+  newCardElement.style.color = currentCard.textcolor;
   newCardElement.id = currentCard.serial;
   newCardElement
     .querySelector(".card__edit-button")
@@ -116,9 +132,7 @@ function createNewCardFromInput() {
   newCardElement
     .querySelector(".card__delete-button")
     .addEventListener("click", (event) => {
-      getCurrentCardElement(event);
-      currentCardElement.remove();
-      // add remove card from cards array
+      handleDeleteButtonClick(event);
     });
   newCardElement
     .querySelector(".card__capture-button")
@@ -148,20 +162,53 @@ function updateCard(card) {
     card.querySelector(".card__person-contact-info").textContent =
       contactInput.value;
     card.style.backgroundColor = colorInput.value;
+    card.style.color = textColorInput.value;
     cards[card.id].name = nameInput.value;
     cards[card.id].profession = professionInput.value;
     cards[card.id].contact = contactInput.value;
     cards[card.id].image = avatarUrlInput.value;
     cards[card.id].color = colorInput.value;
+    cards[card.id].textcolor = textColorInput.value;
   }
   toggleModal(modalCardEl);
 }
 
+function toggleConfirmBanner(card) {
+  const confirmBanner = card.querySelector('.confirm-banner');
+  const confirmWrapper = card.querySelector('.confirm-banner__wrapper');
+  confirmBanner.classList.toggle('confirm-banner_active');
+  confirmWrapper.classList.toggle('confirm-banner__wrapper_active');
+  const confirmDeleteButton = card.querySelector('.button_type_confirm');
+  const cancelDeleteButton = card.querySelector('.button_type_cancel');
+
+  function handleConfirmClick (event) {
+    getCurrentCardElement(event); 
+    confirmBanner.classList.remove('confirm-banner_active');
+    confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+    currentCardElement.remove()
+  }
+
+  function handleCancelClick (event) {
+    confirmBanner.classList.remove('confirm-banner_active');
+    confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+    confirmDeleteButton.removeEventListener('click', handleConfirmClick);
+    cancelDeleteButton.removeEventListener('click', handleCancelClick);
+  }
+  confirmDeleteButton.addEventListener('click', handleConfirmClick);
+  cancelDeleteButton.addEventListener('click', handleCancelClick);
+
+}
+
+function handleDeleteButtonClick(event) {
+  getCurrentCardElement(event);
+  toggleConfirmBanner(currentCardElement);
+}
+
 function downloadCanvas() {
   const canvasEl = captureWindow.firstElementChild;
-  const link = document.createElement('a');
-  link.download = 'canvas.png';
-  link.href = canvasEl.toDataURL()
+  const link = document.createElement("a");
+  link.download = "canvas.png";
+  link.href = canvasEl.toDataURL();
   link.click();
 }
 
@@ -177,8 +224,7 @@ formEl.addEventListener("submit", (event) => {
 });
 
 cardDeleteButtonEl.addEventListener("click", (event) => {
-  getCurrentCardElement(event);
-  currentCardElement.remove();
+  handleDeleteButtonClick(event);
 });
 
 cardModalCloseButtonEl.addEventListener("click", () => {
@@ -190,8 +236,6 @@ previewModalCloseButtonEl.addEventListener("click", () => {
   toggleModal(modalPreviewEl);
 });
 
-
-
 cardAddButtonEl.addEventListener("click", () => {
   toggleModal(modalCardEl);
   isCardNew = true;
@@ -200,6 +244,7 @@ cardAddButtonEl.addEventListener("click", () => {
   contactInput.value = "Your contact information";
   avatarUrlInput.value = getRandomAvatarUrl();
   colorInput.value = getRandomColor();
+  textColorInput.value = "#000000";
 });
 
 cardCaptureButtonEl.addEventListener("click", (event) => {
