@@ -1,4 +1,7 @@
 .confirm-banner__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   width: 90%;
   text-align: center;
   background-color: #ae3838;

@@ -13,6 +13,7 @@
 @import url('../blocks/capture-window/capture-window.css');
 @import url('../blocks/export-button/export-button.css');
 @import url('../blocks/confirm-banner/confirm-banner.css');
+@import url('../blocks/button/button.css');
 
 /* Elements */
 @import url('../blocks/card/__person-name/card__person-name.css');
