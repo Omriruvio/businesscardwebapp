@@ -180,21 +180,28 @@ function toggleConfirmBanner(card) {
   confirmWrapper.classList.toggle('confirm-banner__wrapper_active');
   const confirmDeleteButton = card.querySelector('.button_type_confirm');
   const cancelDeleteButton = card.querySelector('.button_type_cancel');
-  confirmDeleteButton.addEventListener('click', (event) => {
-    getCurrentCardElement(event);  
-    currentCardElement.remove()
-  });
-  cancelDeleteButton.addEventListener('click', () => { 
+
+  function handleConfirmClick (event) {
+    getCurrentCardElement(event); 
     confirmBanner.classList.remove('confirm-banner_active');
     confirmWrapper.classList.remove('confirm-banner__wrapper_active');
-   })
+    currentCardElement.remove()
+  }
+
+  function handleCancelClick (event) {
+    confirmBanner.classList.remove('confirm-banner_active');
+    confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+    confirmDeleteButton.removeEventListener('click', handleConfirmClick);
+    cancelDeleteButton.removeEventListener('click', handleCancelClick);
+  }
+  confirmDeleteButton.addEventListener('click', handleConfirmClick);
+  cancelDeleteButton.addEventListener('click', handleCancelClick);
 
 }
 
 function handleDeleteButtonClick(event) {
   getCurrentCardElement(event);
   toggleConfirmBanner(currentCardElement);
-  // currentCardElement.remove();
 }
 
 function downloadCanvas() {
