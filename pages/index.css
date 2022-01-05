@@ -1,37 +1,38 @@
 /* Fonts & Normalize */
-@import url('../vendor/normalize.css');
-@import url('../vendor/fonts/fonts.css');
+@import url("../vendor/normalize.css");
+@import url("../vendor/fonts/fonts.css");
 
 /* Blocks */
-@import url('../blocks/page/page.css');
-@import url('../blocks/main-content/main-content.css');
-@import url('../blocks/card-list/card-list.css');
-@import url('../blocks/card/card.css');
-@import url('../blocks/modal/modal.css');
-@import url('../blocks/card-edit-form/card-edit-form.css');
-@import url('../blocks/card-button/card-button.css');
-@import url('../blocks/capture-window/capture-window.css');
-@import url('../blocks/export-button/export-button.css');
+@import url("../blocks/page/page.css");
+@import url("../blocks/main-content/main-content.css");
+@import url("../blocks/card-list/card-list.css");
+@import url("../blocks/card/card.css");
+@import url("../blocks/modal/modal.css");
+@import url("../blocks/card-edit-form/card-edit-form.css");
+@import url("../blocks/card-button/card-button.css");
+@import url("../blocks/capture-window/capture-window.css");
+@import url("../blocks/export-button/export-button.css");
 
 /* Elements */
-@import url('../blocks/card/__person-name/card__person-name.css');
-@import url('../blocks/card/__person-avatar/card__person-avatar.css');
-@import url('../blocks/card/__person-profession/card__person-profession.css');
-@import url('../blocks/card/__person-contact-info/card__person-contact-info.css');
-@import url('../blocks/card/__edit-button/card__edit-button.css');
-@import url('../blocks/card/__delete-button/card__delete-button.css');
-@import url('../blocks/card/__capture-button/card__capture-button.css');
-@import url('../blocks/modal/__window/modal__window.css');
-@import url('../blocks/modal/__title/modal__title.css');
-@import url('../blocks/card-edit-form/__input-field/card-edit-form__input-field.css');
-@import url('../blocks/card-edit-form/__input-field-container/card-edit-form__input-field-container.css');
-@import url('../blocks/card-edit-form/__submit-button/card-edit-form__submit-button.css');
-@import url('../blocks/modal/__close-button/modal__close-button.css');
-@import url('../blocks/card/__add-button/card__add-button.css');
-@import url('../blocks/modal/__preview-wrapper/modal__preview-wrapper.css');
+@import url("../blocks/card/__person-name/card__person-name.css");
+@import url("../blocks/card/__person-avatar/card__person-avatar.css");
+@import url("../blocks/card/__person-profession/card__person-profession.css");
+@import url("../blocks/card/__person-contact-info/card__person-contact-info.css");
+@import url("../blocks/card/__edit-button/card__edit-button.css");
+@import url("../blocks/card/__delete-button/card__delete-button.css");
+@import url("../blocks/card/__capture-button/card__capture-button.css");
+@import url("../blocks/modal/__window/modal__window.css");
+@import url("../blocks/modal/__title/modal__title.css");
+@import url("../blocks/card-edit-form/__input-field/card-edit-form__input-field.css");
+@import url("../blocks/card-edit-form/__input-field-container/card-edit-form__input-field-container.css");
+@import url("../blocks/card-edit-form/__submit-button/card-edit-form__submit-button.css");
+@import url("../blocks/modal/__close-button/modal__close-button.css");
+@import url("../blocks/card/__add-button/card__add-button.css");
+@import url("../blocks/modal/__preview-wrapper/modal__preview-wrapper.css");
 
-@import url('../blocks/modal/_active/modal_active.css');
-@import url('../blocks/card/_template/card_template.css');
-@import url('../blocks/card-edit-form/__input-field/_type/card-edit-form__input-field_type_color.css');
-@import url('../blocks/modal/_type/modal_type_preview.css');
-@import url('../blocks/modal/__window/_type/modal__window_type_preview.css');
+@import url("../blocks/modal/_active/modal_active.css");
+@import url("../blocks/card/_template/card_template.css");
+@import url("../blocks/card-edit-form/__input-field/_type/card-edit-form__input-field_type_color.css");
+@import url("../blocks/card-edit-form/__input-field/_type/card-edit-form__input-field_type_text-color.css");
+@import url("../blocks/modal/_type/modal_type_preview.css");
+@import url("../blocks/modal/__window/_type/modal__window_type_preview.css");
