@@ -1,0 +1,26 @@
+.modal__window {
+  position: relative;
+  background-color: #28303dfa;
+  width: 549px;
+  height: 430px;
+  border-radius: 40px;
+  color: antiquewhite;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 45px;
+}
+
+@media screen and (max-width: 510px) {
+  .modal__window {
+    max-width: 300px;
+    gap: 10px;
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .modal__window {
+  }
+}
