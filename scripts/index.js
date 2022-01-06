@@ -60,7 +60,16 @@ cards[0] = {
 
 function openModal(modal) {
   modal.classList.add('modal_active');
-  nameInput.focus();
+  focusInput(nameInput);
+}
+
+function focusInput(input) {
+  ally.when.focusable({
+    context: input,
+    callback: function(element) {
+      element.focus();
+    }
+  });
 }
 
 function closeModal(modal) {
