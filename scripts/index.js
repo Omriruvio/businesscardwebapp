@@ -277,3 +277,10 @@ modalPreviewEl.addEventListener('click', (event) => {
   if (event.currentTarget === event.target) closeModal(modalPreviewEl)
 });
 
+document.addEventListener('keydown', (event) => {
+  const currentModal = document.querySelector('.modal_active');
+  if ((event.key == "Escape") && (currentModal)) {
+    closeModal(currentModal);
+  }
+})
+
