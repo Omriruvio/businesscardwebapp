@@ -147,15 +147,7 @@ function createNewCardFromInput() {
     .addEventListener("click", (event) => {
       handleDeleteButtonClick(event);
     });
-  newCardElement
-    .querySelector(".card__capture-button")
-    .addEventListener("click", (event) => {
-      openModal(modalPreviewEl);
-      getCurrentCardElement(event);
-      html2canvas(currentCardElement).then(function (canvas) {
-        captureWindow.replaceChildren(canvas);
-      });
-    });
+  newCardElement.querySelector(".card__capture-button").addEventListener("click", handleCaptureClick);
   return newCardElement;
 }
 
@@ -169,11 +161,9 @@ function updateCard(card) {
   } else {
     // if card is not new
     card.querySelector(".card__person-name").textContent = nameInput.value;
-    card.querySelector(".card__person-profession").textContent =
-      professionInput.value;
+    card.querySelector(".card__person-profession").textContent = professionInput.value;
     card.querySelector(".card__person-avatar").src = avatarUrlInput.value;
-    card.querySelector(".card__person-contact-info").textContent =
-      contactInput.value;
+    card.querySelector(".card__person-contact-info").textContent = contactInput.value;
     card.style.backgroundColor = colorInput.value;
     card.style.color = textColorInput.value;
     cards[card.id].name = nameInput.value;
@@ -215,6 +205,26 @@ function toggleConfirmBanner(card) {
 function handleDeleteButtonClick(event) {
   getCurrentCardElement(event);
   toggleConfirmBanner(currentCardElement);
+}
+
+function handleCaptureClick (event) {
+  openModal(modalPreviewEl);
+  getCurrentCardElement(event);
+  domtoimage.toSvg(currentCardElement, {filter: filterCardOverlays}).then(function (dataUrl) {
+    const img = new Image();
+    img.src = dataUrl;
+    captureWindow.replaceChildren(img);
+    captureWindow.firstElementChild.style.maxWidth = '100%';
+  })
+
+  function filterCardOverlays (node) { 
+  // return true if current parsed node are not of button or div types
+  // could probably be written in a better way but external library was handling things strangely
+    if ((node.tagName)) {
+      return ((node.tagName.toString().toLowerCase() !== 'button')&&(node.tagName.toString().toLowerCase() !== 'div'));
+     }
+    else if (node.TEXT_NODE == 3) {return true}
+  }
 }
 
 function downloadCanvas() {
@@ -260,14 +270,7 @@ cardAddButtonEl.addEventListener("click", () => {
   textColorInput.value = "#000000";
 });
 
-cardCaptureButtonEl.addEventListener("click", (event) => {
-  openModal(modalPreviewEl);
-  getCurrentCardElement(event);
-  html2canvas(currentCardElement).then(function (canvas) {
-    captureWindow.replaceChildren(canvas);
-    captureWindow.firstElementChild.style.maxWidth = "100%";
-  });
-});
+cardCaptureButtonEl.addEventListener("click", handleCaptureClick);
 
 modalCardEl.addEventListener('click', (event) => {
   if (event.currentTarget === event.target) closeModal(modalCardEl)
@@ -283,4 +286,6 @@ document.addEventListener('keydown', (event) => {
     closeModal(currentModal);
   }
 })
+
+
 
