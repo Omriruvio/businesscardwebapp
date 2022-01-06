@@ -7,7 +7,6 @@
     <title>Business Cards App</title>
     <link rel="stylesheet" href="./pages/index.css" />
     <link rel="icon" href="./images/favicon.ico" />
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
   </head>
   <body class="page">
     <header></header>
@@ -63,10 +62,10 @@
           <p class="card__person-profession">Co-Founder & CEO @ CyberGames</p>
           <img src="./images/omri-avatar.svg" alt="" class="card__person-avatar" />
           <p class="card__person-contact-info">+972.58.740.0020 | omri@cyber.games | cyber.games</p>
-          <button class="card-button card__edit-button" title="Edit" data-html2canvas-ignore="true"></button>
-          <button class="card-button card__delete-button" title="Delete" data-html2canvas-ignore="true"></button>
-          <button class="card-button card__capture-button" title="Download card as image" data-html2canvas-ignore="true"></button>
-          <div class="confirm-banner" data-html2canvas-ignore="true">
+          <button class="card-button card__edit-button" title="Edit"></button>
+          <button class="card-button card__delete-button" title="Delete"></button>
+          <button class="card-button card__capture-button" title="Download card as image"></button>
+          <div class="confirm-banner">
             <div class="confirm-banner__wrapper">
               <h3 class="confirm-banner__title">Delete this card?</h3>
               <div class="confirm-banner__buttons">
@@ -86,6 +85,7 @@
       </div>
     </main>
     <footer></footer>
+    <script src="./node_modules/dom-to-image/dist/dom-to-image.min.js"></script>
     <script src="https://cdn.jsdelivr.net/ally.js/1.4.1/ally.min.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
