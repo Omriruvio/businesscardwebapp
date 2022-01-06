@@ -151,8 +151,6 @@ function createNewCardFromInput() {
   return newCardElement;
 }
 
-// add click outside modal to close functinoality
-
 function updateCard(card) {
   // if card is new create new card and add to array
   if (isCardNew) {
@@ -228,11 +226,12 @@ function handleCaptureClick (event) {
 }
 
 function downloadCanvas() {
-  const canvasEl = captureWindow.firstElementChild;
-  const link = document.createElement("a");
-  link.download = "canvas.png";
-  link.href = canvasEl.toDataURL();
+  const img = captureWindow.firstElementChild;
+  const link = document.createElement('a');
+  link.href = img.src;
+  link.download = 'my-business-card.svg'
   link.click();
+
 }
 
 exportButtonEl.addEventListener("click", downloadCanvas);
