@@ -58,9 +58,13 @@ cards[0] = {
   serial: 0,
 };
 
-function toggleModal(modal) {
-  modal.classList.toggle("modal_active");
+function openModal(modal) {
+  modal.classList.add('modal_active');
   nameInput.focus();
+}
+
+function closeModal(modal) {
+  modal.classList.remove('modal_active');
 }
 
 function getRandomAvatarUrl() {
@@ -97,7 +101,7 @@ function getRandomColor() {
 }
 
 function handleEditButtonClick(event) {
-  toggleModal(modalCardEl);
+  openModal(modalCardEl);
   getCurrentCardElement(event);
   const currentCardID = event.target.closest(".card").id;
   nameInput.value = cards[currentCardID].name;
@@ -137,7 +141,7 @@ function createNewCardFromInput() {
   newCardElement
     .querySelector(".card__capture-button")
     .addEventListener("click", (event) => {
-      toggleModal(modalPreviewEl);
+      openModal(modalPreviewEl);
       getCurrentCardElement(event);
       html2canvas(currentCardElement).then(function (canvas) {
         captureWindow.replaceChildren(canvas);
@@ -170,7 +174,7 @@ function updateCard(card) {
     cards[card.id].color = colorInput.value;
     cards[card.id].textcolor = textColorInput.value;
   }
-  toggleModal(modalCardEl);
+  closeModal(modalCardEl);
 }
 
 function toggleConfirmBanner(card) {
@@ -228,16 +232,16 @@ cardDeleteButtonEl.addEventListener("click", (event) => {
 });
 
 cardModalCloseButtonEl.addEventListener("click", () => {
-  toggleModal(modalCardEl);
+  closeModal(modalCardEl);
   isCardNew = false;
 });
 
 previewModalCloseButtonEl.addEventListener("click", () => {
-  toggleModal(modalPreviewEl);
+  closeModal(modalPreviewEl);
 });
 
 cardAddButtonEl.addEventListener("click", () => {
-  toggleModal(modalCardEl);
+  openModal(modalCardEl);
   isCardNew = true;
   nameInput.value = "Your name";
   professionInput.value = "Your profession / education";
@@ -248,7 +252,7 @@ cardAddButtonEl.addEventListener("click", () => {
 });
 
 cardCaptureButtonEl.addEventListener("click", (event) => {
-  toggleModal(modalPreviewEl);
+  openModal(modalPreviewEl);
   getCurrentCardElement(event);
   html2canvas(currentCardElement).then(function (canvas) {
     captureWindow.replaceChildren(canvas);
@@ -257,10 +261,10 @@ cardCaptureButtonEl.addEventListener("click", (event) => {
 });
 
 modalCardEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) toggleModal(modalCardEl)
+  if (event.currentTarget === event.target) closeModal(modalCardEl)
 });
 
 modalPreviewEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) toggleModal(modalPreviewEl)
+  if (event.currentTarget === event.target) closeModal(modalPreviewEl)
 });
 
