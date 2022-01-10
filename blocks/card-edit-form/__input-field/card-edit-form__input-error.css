@@ -1,0 +1,14 @@
+.card-edit-form__input-error {
+  line-height: 1.5em;
+  width: 70%;
+  align-self: flex-end;
+  text-align: start;
+  padding: 0 4px;
+  color: #b66060b0;
+}
+
+@media screen and (max-width: 510px) {
+  .card-edit-form__input-error {
+    width: 90%;
+  }
+}

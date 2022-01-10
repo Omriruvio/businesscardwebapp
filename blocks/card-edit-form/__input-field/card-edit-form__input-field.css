@@ -6,6 +6,7 @@
   border-bottom: 1px solid #faebd75e;
   text-overflow: ellipsis;
   padding: 0px 4px;
+  line-height: 1.5em;
 }
 
 @media screen and (max-width: 510px) {

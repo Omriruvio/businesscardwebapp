@@ -1,6 +1,5 @@
 .card-edit-form__submit-button {
-  margin-top: 10px;
-  margin-top: 22px;
+  margin-bottom: 20px;
   height: 3rem;
   width: 8rem;
   background-color: antiquewhite;
@@ -9,4 +8,13 @@
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
+  align-self: center;
+}
+
+@media screen and (max-width: 510px) {
+  .card-edit-form__submit-button {
+    margin-top: 20px;
+    height: 2rem;
+    width: calc(8rem * 2 / 3);
+  }
 }

@@ -1,0 +1,5 @@
+.card-edit-form__error-wrapper {
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+}

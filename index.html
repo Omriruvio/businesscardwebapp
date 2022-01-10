@@ -28,20 +28,33 @@
             />
             <label class="card-edit-form__input-field-container">
               Name:
-              <input minlength="3" maxlength="25" type="text" class="card-edit-form__input-field js-name-input" />
+              <input id="name-input" minlength="3" maxlength="25" type="text" class="card-edit-form__input-field js-name-input" />
             </label>
+            <div class="card-edit-form__error-wrapper">
+            <span id="name-input-error" class="card-edit-form__input-error">Error</span>
+          </div>
             <label class="card-edit-form__input-field-container">
               Profession:
-              <input maxlength="85" type="text" class="card-edit-form__input-field js-profession-input" />
+              <input id="job-input" maxlength="85" type="text" class="card-edit-form__input-field js-profession-input" />
             </label>
+            <div class="card-edit-form__error-wrapper">
+            <span id="job-input-error" class="card-edit-form__input-error">Error</span>
+            </div>
             <label class="card-edit-form__input-field-container">
               Image URL:
-              <input type="text" class="card-edit-form__input-field js-img-url-input" />
+              <input id="img-input" type="text" class="card-edit-form__input-field js-img-url-input" />
             </label>
+            <div class="card-edit-form__error-wrapper">
+            <span id="img-input-error" class="card-edit-form__input-error">Error</span>
+            </div>
             <label class="card-edit-form__input-field-container">
               Contact details:
-              <input type="text" class="card-edit-form__input-field js-contact-input" />
+              <input id="contact-input" type="text" class="card-edit-form__input-field js-contact-input" />
             </label>
+            <div class="card-edit-form__error-wrapper">
+            <span id="contact-input-error" class="card-edit-form__input-error">Error</span>
+          </div>
+            </form>
             <button type="submit" class="card-edit-form__submit-button">Save</button>
           </form>
         </div>
