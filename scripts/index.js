@@ -236,18 +236,14 @@ function downloadCanvas() {
 
 exportButtonEl.addEventListener("click", downloadCanvas);
 
-cardEditButtonEl.addEventListener("click", (event) =>
-  handleEditButtonClick(event)
-);
+cardEditButtonEl.addEventListener("click", handleEditButtonClick);
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
   updateCard(currentCardElement);
 });
 
-cardDeleteButtonEl.addEventListener("click", (event) => {
-  handleDeleteButtonClick(event);
-});
+cardDeleteButtonEl.addEventListener("click", handleDeleteButtonClick);
 
 cardModalCloseButtonEl.addEventListener("click", () => {
   closeModal(modalCardEl);
@@ -272,11 +268,11 @@ cardAddButtonEl.addEventListener("click", () => {
 cardCaptureButtonEl.addEventListener("click", handleCaptureClick);
 
 modalCardEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) closeModal(modalCardEl)
+  if (event.currentTarget === event.target) closeModal(event.currentTarget)
 });
 
 modalPreviewEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) closeModal(modalPreviewEl)
+  if (event.currentTarget === event.target) closeModal(event.currentTarget)
 });
 
 document.addEventListener('keydown', (event) => {
