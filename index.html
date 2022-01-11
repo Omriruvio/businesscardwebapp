@@ -15,46 +15,37 @@
         <div class="modal__window">
           <button class="modal__close-button" title="Discard"></button>
           <h2 class="modal__title">Edit your card</h2>
-          <form class="card-edit-form">
-            <input
-              type="color"
-              class="card-edit-form__input-field card-edit-form__input-field_type_color js-color-input"
-              title="Choose background color"
-            />
-            <input
-              type="color"
-              class="card-edit-form__input-field card-edit-form__input-field_type_text-color js-text-color-input"
-              title="Choose text color"
-            />
+          <form name="cardForm" id="card-form" class="form card-edit-form" novalidate>
+            <input type="color" class="card-edit-form__input-field_type_color js-color-input" title="Choose background color" />
+            <input type="color" class="card-edit-form__input-field_type_text-color js-text-color-input" title="Choose text color" />
             <label class="card-edit-form__input-field-container">
               Name:
-              <input id="name-input" minlength="3" maxlength="25" type="text" class="card-edit-form__input-field js-name-input" />
+              <input id="name-input" minlength="3" maxlength="25" type="text" class="card-edit-form__input-field js-name-input" required />
             </label>
             <div class="card-edit-form__error-wrapper">
-            <span id="name-input-error" class="card-edit-form__input-error">Error</span>
-          </div>
+              <span id="name-input-error" class="card-edit-form__input-error"></span>
+            </div>
             <label class="card-edit-form__input-field-container">
               Profession:
-              <input id="job-input" maxlength="85" type="text" class="card-edit-form__input-field js-profession-input" />
+              <input id="job-input" minlength="1" maxlength="85" type="text" class="card-edit-form__input-field js-profession-input" required />
             </label>
             <div class="card-edit-form__error-wrapper">
-            <span id="job-input-error" class="card-edit-form__input-error">Error</span>
+              <span id="job-input-error" class="card-edit-form__input-error"></span>
             </div>
             <label class="card-edit-form__input-field-container">
               Image URL:
-              <input id="img-input" type="text" class="card-edit-form__input-field js-img-url-input" />
+              <input id="img-input" type="text" class="card-edit-form__input-field js-img-url-input" required />
             </label>
             <div class="card-edit-form__error-wrapper">
-            <span id="img-input-error" class="card-edit-form__input-error">Error</span>
+              <span id="img-input-error" class="card-edit-form__input-error"></span>
             </div>
             <label class="card-edit-form__input-field-container">
               Contact details:
-              <input id="contact-input" type="text" class="card-edit-form__input-field js-contact-input" />
+              <input id="contact-input" type="text" class="card-edit-form__input-field js-contact-input" required />
             </label>
             <div class="card-edit-form__error-wrapper">
-            <span id="contact-input-error" class="card-edit-form__input-error">Error</span>
-          </div>
-            </form>
+              <span id="contact-input-error" class="card-edit-form__input-error"></span>
+            </div>
             <button type="submit" class="card-edit-form__submit-button">Save</button>
           </form>
         </div>
@@ -100,6 +91,7 @@
     <footer></footer>
     <script src="./node_modules/dom-to-image/dist/dom-to-image.min.js"></script>
     <script src="https://cdn.jsdelivr.net/ally.js/1.4.1/ally.min.js"></script>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
