@@ -14,13 +14,12 @@
 
 @media screen and (max-width: 510px) {
   .modal__window {
-    max-width: 300px;
-    gap: 10px;
+    gap: 2px;
     max-width: 90%;
   }
 }
 
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
   .modal__window {
   }
-}
+} */

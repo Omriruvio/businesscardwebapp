@@ -1,10 +1,12 @@
 .card-edit-form__input-field {
+  color: antiquewhite;
   width: 70%;
-  background-color: antiquewhite;
-  border: none;
-  border-radius: 5px;
-  padding-left: 0.4em;
-  outline: none;
+  background-color: transparent;
+  border: initial;
+  border-bottom: 1px solid #faebd75e;
+  text-overflow: ellipsis;
+  padding: 0px 4px;
+  line-height: 1.5em;
 }
 
 @media screen and (max-width: 510px) {
@@ -17,4 +19,9 @@
 @media screen and (max-width: 400px) {
   .card-edit-form__input-field {
   }
+}
+
+.card-edit-form__input-field:focus {
+  outline: 1px solid #ffffff73;
+  border-radius: 5px;
 }
