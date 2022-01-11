@@ -1,4 +1,10 @@
 .modal__title {
   font-size: 1.5em;
-  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 510px) {
+  .modal__title {
+    margin-bottom: 20px;
+  }
 }

@@ -3,5 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
+}
+
+@media screen and (max-width: 510px) {
+  .card-edit-form {
+    font-size: 14px;
+    gap: 2px;
+  }
 }
