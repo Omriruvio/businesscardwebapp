@@ -2,7 +2,7 @@
   color: antiquewhite;
   width: 70%;
   background-color: transparent;
-  border: none;
+  border: initial;
   border-bottom: 1px solid #faebd75e;
   text-overflow: ellipsis;
   padding: 0px 4px;
@@ -23,6 +23,5 @@
 
 .card-edit-form__input-field:focus {
   outline: 1px solid #ffffff73;
-  border: none;
   border-radius: 5px;
 }

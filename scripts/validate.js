@@ -15,8 +15,17 @@ function isFieldValid(field) {
   return (field.validity.valid);
 }
 
+function getShortErrorMessage (field) {
+  return (
+    field.validity.badInput ? 'Incorrect input.' :
+    field.validity.tooLong ? 'Text too long.' :
+    field.validity.tooShort ? 'Text too short.' :
+    field.validity.valueMissing ? 'Please fill this field.' : 
+    field.validationMessage)
+}
+
 function showError(field, error) {
-  error.textContent = field.validationMessage;
+  error.textContent = getShortErrorMessage(field);
 }
 
 function hideError(field, error) {
