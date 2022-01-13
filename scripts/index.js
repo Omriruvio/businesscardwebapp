@@ -215,7 +215,7 @@ function handleDeleteButtonClick(event) {
 function handleCaptureClick (event) {
   openModal(modalPreviewEl);
   getCurrentCardElement(event);
-  domtoimage.toSvg(currentCardElement, {filter: filterCardOverlays}).then(function (dataUrl) {
+  domtoimage.toSvg(currentCardElement, {filter: filterCardOverlays, style: {borderRadius: 'unset'}}).then(function (dataUrl) {
     const img = new Image();
     img.src = dataUrl;
     captureWindow.replaceChildren(img);
