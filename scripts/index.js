@@ -220,6 +220,7 @@ function handleCaptureClick (event) {
     img.src = dataUrl;
     captureWindow.replaceChildren(img);
     captureWindow.firstElementChild.style.maxWidth = '100%';
+    captureWindow.firstElementChild.style.borderRadius = '20px';
   })
 
   function filterCardOverlays (node) { 
