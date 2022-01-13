@@ -228,6 +228,7 @@ function handleCaptureClick (event) {
     if ((node.tagName)) {
       return ((node.tagName.toString().toLowerCase() !== 'button')&&(node.tagName.toString().toLowerCase() !== 'div'));
      }
+     // if node is a text node return true
     else if (node.TEXT_NODE == 3) {return true}
   }
 }
