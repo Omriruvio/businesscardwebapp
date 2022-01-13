@@ -60,20 +60,20 @@ cards[0] = {
 
 function openModal(modal) {
   modal.classList.add('modal_active');
-  focusInputAsync(nameInput, 100);
+  // focusInputAsync(nameInput, 100);
 }
 
-function focusInputAsync(inputEl, interval) {
-  let checkFocus = setInterval(()=> {
-    if (!isInputFocused(inputEl)) {
-      // console.log('input was not focused');
-      inputEl.focus();
-    } else {
-      // console.log('input is focused');
-      clearInterval(checkFocus);
-    }
-  }, interval)
-}
+// function focusInputAsync(inputEl, interval) {
+//   let checkFocus = setInterval(()=> {
+//     if (!isInputFocused(inputEl)) {
+//       console.log('input was not focused');
+//       inputEl.focus();
+//     } else {
+//       console.log('input is focused');
+//       clearInterval(checkFocus);
+//     }
+//   }, interval)
+// }
 
 function isInputFocused (inputEl) {
   return (document.activeElement == inputEl);
@@ -288,6 +288,10 @@ document.addEventListener('keydown', (event) => {
     closeModal(currentModal);
   }
 })
+
+modalCardEl.addEventListener('transitionend', (event) => {
+  if (event.target.classList.contains('modal_active')) nameInput.focus();
+});
 
 
 
