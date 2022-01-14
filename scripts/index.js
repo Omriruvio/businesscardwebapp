@@ -61,7 +61,7 @@ function generateFirstCard() {
 }
 
 function renderCardList() {
-  if (localStorage.cardList !== 'undefined') {
+  if ((localStorage.cardList !== undefined) && (localStorage.cardList !== 'undefined')) {
     JSON.parse(localStorage.cardList).forEach(card => {
       if (!card.deleted) {
         const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
