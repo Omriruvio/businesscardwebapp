@@ -338,7 +338,7 @@ function clearLocalStorage () {
 }
 
 function initiateCardList () {
-  if (localStorage.cardList == 'undefined') {
+  if ((localStorage.cardList == 'undefined') || (localStorage.cardList == undefined)) {
     generateFirstCard()
   } else {
     cards = (JSON.parse(localStorage.cardList))
