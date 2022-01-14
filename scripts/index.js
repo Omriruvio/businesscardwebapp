@@ -61,7 +61,9 @@ function generateFirstCard() {
 }
 
 function renderCardList() {
-  if ((localStorage.cardList !== undefined) && (localStorage.cardList !== 'undefined')) {
+  if ((localStorage.cardList == undefined) || (localStorage.cardList == 'undefined')) {
+    updateLocalStorage(cards);
+  } else {
     JSON.parse(localStorage.cardList).forEach(card => {
       if (!card.deleted) {
         const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
@@ -80,8 +82,6 @@ function renderCardList() {
         cardListEl.appendChild(newCardElement);
       }
     })
-  } else {
-    updateLocalStorage(cards);
   }
 }
 
