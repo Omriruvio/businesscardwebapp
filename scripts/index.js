@@ -63,26 +63,26 @@ function generateFirstCard() {
 function renderCardList() {
   if ((localStorage.cardList == undefined) || (localStorage.cardList == 'undefined')) {
     updateLocalStorage(cards);
-  } else {
-    JSON.parse(localStorage.cardList).forEach(card => {
-      if (!card.deleted) {
-        const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
-        newCardElement.classList.remove("card-id-0");
-        newCardElement.classList.add("card" + "-id-" + card.serial);
-        newCardElement.querySelector(".card__person-name").textContent =
-        card.name;
-        newCardElement.querySelector(".card__person-profession").textContent =
-        card.profession;
-        newCardElement.querySelector(".card__person-avatar").src = card.image;
-        newCardElement.querySelector(".card__person-contact-info").textContent =
-        card.contact;
-        newCardElement.style.backgroundColor = card.color;
-        newCardElement.style.color = card.textcolor;
-        newCardElement.id = card.serial;
-        cardListEl.appendChild(newCardElement);
-      }
-    })
-  }
+  } 
+  JSON.parse(localStorage.cardList).forEach(card => {
+    if (!card.deleted) {
+      const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
+      newCardElement.classList.remove("card-id-0");
+      newCardElement.classList.add("card" + "-id-" + card.serial);
+      newCardElement.querySelector(".card__person-name").textContent =
+      card.name;
+      newCardElement.querySelector(".card__person-profession").textContent =
+      card.profession;
+      newCardElement.querySelector(".card__person-avatar").src = card.image;
+      newCardElement.querySelector(".card__person-contact-info").textContent =
+      card.contact;
+      newCardElement.style.backgroundColor = card.color;
+      newCardElement.style.color = card.textcolor;
+      newCardElement.id = card.serial;
+      cardListEl.appendChild(newCardElement);
+    }
+  })
+  
 }
 
 function updateLocalStorage(cards) {
