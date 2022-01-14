@@ -1,4 +1,4 @@
-const cards = [];
+let cards = [];
 let isCardNew = false;
 let currentCardElement = document.querySelector(".card");
 const randomAvatarLength = 12;
@@ -58,6 +58,31 @@ function generateFirstCard() {
     textcolor: "#000000",
     serial: 0,
   };
+}
+
+function renderCardList() {
+  if (localStorage.cardList !== 'undefined') {
+    JSON.parse(localStorage.cardList).forEach(card => {
+      if (!card.deleted) {
+        const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
+        newCardElement.classList.remove("card-id-0");
+        newCardElement.classList.add("card" + "-id-" + card.serial);
+        newCardElement.querySelector(".card__person-name").textContent =
+        card.name;
+        newCardElement.querySelector(".card__person-profession").textContent =
+        card.profession;
+        newCardElement.querySelector(".card__person-avatar").src = card.image;
+        newCardElement.querySelector(".card__person-contact-info").textContent =
+        card.contact;
+        newCardElement.style.backgroundColor = card.color;
+        newCardElement.style.color = card.textcolor;
+        newCardElement.id = card.serial;
+        cardListEl.appendChild(newCardElement);
+      }
+    })
+  } else {
+    updateLocalStorage(cards);
+  }
 }
 
 function updateLocalStorage(cards) {
@@ -142,6 +167,7 @@ function createNewCardFromInput() {
   const currentCard = createNewCard();
   // saves card info in cards array
   cards.push(currentCard);
+  updateLocalStorage(cards);
   const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
@@ -177,6 +203,7 @@ function updateCard(card) {
     cards[card.id].image = avatarUrlInput.value;
     cards[card.id].color = colorInput.value;
     cards[card.id].textcolor = textColorInput.value;
+    updateLocalStorage(cards);
   }
   closeModal(modalCardEl);
 }
@@ -193,7 +220,13 @@ function toggleConfirmBanner(card) {
     getCurrentCardElement(event); 
     confirmBanner.classList.remove('confirm-banner_active');
     confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+    // remove card from cards list
+    // debugger;
+    // cards.splice(cards.find(card => card.serial == event.target.closest('.card').id).serial, 1)
+    cards.find(card => card.serial == event.target.closest('.card').id).deleted = true;
+    // cards.splice(event.target.closest('.card').id, 1)
     currentCardElement.remove()
+    updateLocalStorage(cards);
   }
 
   function handleCancelClick (event) {
@@ -300,5 +333,21 @@ modalCardEl.addEventListener('transitionend', (event) => {
   if (event.target.classList.contains('modal_active')) nameInput.focus();
 });
 
+function clearLocalStorage () {
+  localStorage.cardList = undefined;
+}
 
+function initiateCardList () {
+  if (localStorage.cardList == 'undefined') {
+    generateFirstCard()
+  } else {
+    cards = (JSON.parse(localStorage.cardList))
+  }
 
+}
+
+initiateCardList()
+// cards = (JSON.parse(localStorage.cardList) || generateFirstCard());
+// generateFirstCard();
+// updateLocalStorage(cards);
+renderCardList();
