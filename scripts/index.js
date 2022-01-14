@@ -30,7 +30,7 @@ const cardPersonAvatarEL = document.querySelector(".card__person-avatar");
 const cardPersonContactEL = document.querySelector(
   ".card__person-contact-info"
 );
-const cardPrototypeEl = document.querySelector(".card");
+const cardPrototypeEl = document.querySelector("#card-template");
 const cardListEl = document.querySelector(".card-list");
 const nameInput = document.querySelector(".js-name-input");
 const professionInput = document.querySelector(".js-profession-input");
@@ -47,16 +47,25 @@ const confirmButtonCancel = document.querySelector(".button_type_cancel");
 
 cardPrototypeEl.id = 0;
 
-// add initial card to cards array
-cards[0] = {
-  name: cardPersonNameEL.textContent,
-  profession: cardPersonProfessionEL.textContent,
-  contact: cardPersonContactEL.textContent,
-  image: cardPersonAvatarEL.currentSrc,
-  color: "#FAEBD7",
-  textcolor: "#000000",
-  serial: 0,
-};
+function generateFirstCard() {
+  // add initial card to cards array
+  cards[0] = {
+    name: 'Omri Ruvio',
+    profession: 'Co-Founder & CEO @ CyberGames',
+    contact: '+972.58.740.0020 | omri@cyber.games | cyber.games',
+    image: './images/omri-avatar.svg',
+    color: "#FAEBD7",
+    textcolor: "#000000",
+    serial: 0,
+  };
+}
+
+function updateLocalStorage(cards) {
+  const payload = JSON.stringify(cards);
+  localStorage.setItem('cardList', payload);
+}
+
+// function 
 
 function openModal(modal) {
   modal.classList.add('modal_active');
@@ -133,7 +142,7 @@ function createNewCardFromInput() {
   const currentCard = createNewCard();
   // saves card info in cards array
   cards.push(currentCard);
-  const newCardElement = cardPrototypeEl.cloneNode(true);
+  const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
   newCardElement.querySelector(".card__person-name").textContent =
@@ -146,15 +155,6 @@ function createNewCardFromInput() {
   newCardElement.style.backgroundColor = currentCard.color;
   newCardElement.style.color = currentCard.textcolor;
   newCardElement.id = currentCard.serial;
-  newCardElement
-    .querySelector(".card__edit-button")
-    .addEventListener("click", (event) => handleEditButtonClick(event));
-  newCardElement
-    .querySelector(".card__delete-button")
-    .addEventListener("click", (event) => {
-      handleDeleteButtonClick(event);
-    });
-  newCardElement.querySelector(".card__capture-button").addEventListener("click", handleCaptureClick);
   return newCardElement;
 }
 
@@ -164,7 +164,7 @@ function updateCard(card) {
     cardListEl.appendChild(createNewCardFromInput());
     isCardNew = false;
   } else {
-    // if card is not new
+    // if card is not new (edit current card)
     card.querySelector(".card__person-name").textContent = nameInput.value;
     card.querySelector(".card__person-profession").textContent = professionInput.value;
     card.querySelector(".card__person-avatar").src = avatarUrlInput.value;
@@ -240,19 +240,25 @@ function downloadCanvas() {
   link.href = img.src;
   link.download = 'my-business-card.svg'
   link.click();
-
 }
 
-exportButtonEl.addEventListener("click", downloadCanvas);
+function handleCardListClick (event) {
+  const classList = event.target.classList;
+  if (classList.contains('card__edit-button')) handleEditButtonClick(event)
+  else if (classList.contains('card__delete-button')) handleDeleteButtonClick(event);
+  else if (classList.contains('card__capture-button')) handleCaptureClick(event);
+  else console.log('No valid event detected.')
+}
 
-cardEditButtonEl.addEventListener("click", handleEditButtonClick);
+cardListEl.addEventListener('click', handleCardListClick);
+
+exportButtonEl.addEventListener("click", downloadCanvas);
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
   updateCard(currentCardElement);
 });
 
-cardDeleteButtonEl.addEventListener("click", handleDeleteButtonClick);
 
 cardModalCloseButtonEl.addEventListener("click", () => {
   closeModal(modalCardEl);
@@ -274,7 +280,6 @@ cardAddButtonEl.addEventListener("click", () => {
   textColorInput.value = "#000000";
 });
 
-cardCaptureButtonEl.addEventListener("click", handleCaptureClick);
 
 modalCardEl.addEventListener('click', (event) => {
   if (event.currentTarget === event.target) closeModal(event.currentTarget)
