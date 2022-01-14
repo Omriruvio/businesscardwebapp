@@ -1,4 +1,4 @@
-const cards = [];
+let cards = [];
 let isCardNew = false;
 let currentCardElement = document.querySelector(".card");
 const randomAvatarLength = 12;
@@ -30,7 +30,7 @@ const cardPersonAvatarEL = document.querySelector(".card__person-avatar");
 const cardPersonContactEL = document.querySelector(
   ".card__person-contact-info"
 );
-const cardPrototypeEl = document.querySelector(".card");
+const cardPrototypeEl = document.querySelector("#card-template");
 const cardListEl = document.querySelector(".card-list");
 const nameInput = document.querySelector(".js-name-input");
 const professionInput = document.querySelector(".js-profession-input");
@@ -47,29 +47,70 @@ const confirmButtonCancel = document.querySelector(".button_type_cancel");
 
 cardPrototypeEl.id = 0;
 
-// add initial card to cards array
-cards[0] = {
-  name: cardPersonNameEL.textContent,
-  profession: cardPersonProfessionEL.textContent,
-  contact: cardPersonContactEL.textContent,
-  image: cardPersonAvatarEL.currentSrc,
-  color: "#FAEBD7",
-  textcolor: "#000000",
-  serial: 0,
-};
+function generateFirstCard() {
+  // add initial card to cards array
+  cards[0] = {
+    name: 'Omri Ruvio',
+    profession: 'Co-Founder & CEO @ CyberGames',
+    contact: '+972.58.740.0020 | omri@cyber.games | cyber.games',
+    image: './images/omri-avatar.svg',
+    color: "#FAEBD7",
+    textcolor: "#000000",
+    serial: 0,
+  };
+}
+
+function renderCardList() {
+  if ((localStorage.cardList == undefined) || (localStorage.cardList == 'undefined')) {
+    updateLocalStorage(cards);
+  } 
+  JSON.parse(localStorage.cardList).forEach(card => {
+    if (!card.deleted) {
+      const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
+      newCardElement.classList.remove("card-id-0");
+      newCardElement.classList.add("card" + "-id-" + card.serial);
+      newCardElement.querySelector(".card__person-name").textContent =
+      card.name;
+      newCardElement.querySelector(".card__person-profession").textContent =
+      card.profession;
+      newCardElement.querySelector(".card__person-avatar").src = card.image;
+      newCardElement.querySelector(".card__person-contact-info").textContent =
+      card.contact;
+      newCardElement.style.backgroundColor = card.color;
+      newCardElement.style.color = card.textcolor;
+      newCardElement.id = card.serial;
+      cardListEl.appendChild(newCardElement);
+    }
+  })
+  
+}
+
+function updateLocalStorage(cards) {
+  const payload = JSON.stringify(cards);
+  localStorage.setItem('cardList', payload);
+}
+
+// function 
 
 function openModal(modal) {
   modal.classList.add('modal_active');
-  focusInput(nameInput);
+  // focusInputAsync(nameInput, 100);
 }
 
-function focusInput(input) {
-  ally.when.focusable({
-    context: input,
-    callback: function(element) {
-      element.focus();
-    }
-  });
+// function focusInputAsync(inputEl, interval) {
+//   let checkFocus = setInterval(()=> {
+//     if (!isInputFocused(inputEl)) {
+//       console.log('input was not focused');
+//       inputEl.focus();
+//     } else {
+//       console.log('input is focused');
+//       clearInterval(checkFocus);
+//     }
+//   }, interval)
+// }
+
+function isInputFocused (inputEl) {
+  return (document.activeElement == inputEl);
 }
 
 function closeModal(modal) {
@@ -126,7 +167,8 @@ function createNewCardFromInput() {
   const currentCard = createNewCard();
   // saves card info in cards array
   cards.push(currentCard);
-  const newCardElement = cardPrototypeEl.cloneNode(true);
+  updateLocalStorage(cards);
+  const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
   newCardElement.classList.remove("card-id-0");
   newCardElement.classList.add("card" + "-id-" + currentCard.serial);
   newCardElement.querySelector(".card__person-name").textContent =
@@ -139,15 +181,6 @@ function createNewCardFromInput() {
   newCardElement.style.backgroundColor = currentCard.color;
   newCardElement.style.color = currentCard.textcolor;
   newCardElement.id = currentCard.serial;
-  newCardElement
-    .querySelector(".card__edit-button")
-    .addEventListener("click", (event) => handleEditButtonClick(event));
-  newCardElement
-    .querySelector(".card__delete-button")
-    .addEventListener("click", (event) => {
-      handleDeleteButtonClick(event);
-    });
-  newCardElement.querySelector(".card__capture-button").addEventListener("click", handleCaptureClick);
   return newCardElement;
 }
 
@@ -157,7 +190,7 @@ function updateCard(card) {
     cardListEl.appendChild(createNewCardFromInput());
     isCardNew = false;
   } else {
-    // if card is not new
+    // if card is not new (edit current card)
     card.querySelector(".card__person-name").textContent = nameInput.value;
     card.querySelector(".card__person-profession").textContent = professionInput.value;
     card.querySelector(".card__person-avatar").src = avatarUrlInput.value;
@@ -170,6 +203,7 @@ function updateCard(card) {
     cards[card.id].image = avatarUrlInput.value;
     cards[card.id].color = colorInput.value;
     cards[card.id].textcolor = textColorInput.value;
+    updateLocalStorage(cards);
   }
   closeModal(modalCardEl);
 }
@@ -186,7 +220,13 @@ function toggleConfirmBanner(card) {
     getCurrentCardElement(event); 
     confirmBanner.classList.remove('confirm-banner_active');
     confirmWrapper.classList.remove('confirm-banner__wrapper_active');
+    // remove card from cards list
+    // debugger;
+    // cards.splice(cards.find(card => card.serial == event.target.closest('.card').id).serial, 1)
+    cards.find(card => card.serial == event.target.closest('.card').id).deleted = true;
+    // cards.splice(event.target.closest('.card').id, 1)
     currentCardElement.remove()
+    updateLocalStorage(cards);
   }
 
   function handleCancelClick (event) {
@@ -208,11 +248,12 @@ function handleDeleteButtonClick(event) {
 function handleCaptureClick (event) {
   openModal(modalPreviewEl);
   getCurrentCardElement(event);
-  domtoimage.toSvg(currentCardElement, {filter: filterCardOverlays}).then(function (dataUrl) {
+  domtoimage.toSvg(currentCardElement, {filter: filterCardOverlays, style: {borderRadius: 'unset'}}).then(function (dataUrl) {
     const img = new Image();
     img.src = dataUrl;
     captureWindow.replaceChildren(img);
     captureWindow.firstElementChild.style.maxWidth = '100%';
+    captureWindow.firstElementChild.style.borderRadius = '20px';
   })
 
   function filterCardOverlays (node) { 
@@ -221,6 +262,7 @@ function handleCaptureClick (event) {
     if ((node.tagName)) {
       return ((node.tagName.toString().toLowerCase() !== 'button')&&(node.tagName.toString().toLowerCase() !== 'div'));
      }
+     // if node is a text node return true
     else if (node.TEXT_NODE == 3) {return true}
   }
 }
@@ -231,19 +273,25 @@ function downloadCanvas() {
   link.href = img.src;
   link.download = 'my-business-card.svg'
   link.click();
-
 }
 
-exportButtonEl.addEventListener("click", downloadCanvas);
+function handleCardListClick (event) {
+  const classList = event.target.classList;
+  if (classList.contains('card__edit-button')) handleEditButtonClick(event)
+  else if (classList.contains('card__delete-button')) handleDeleteButtonClick(event);
+  else if (classList.contains('card__capture-button')) handleCaptureClick(event);
+  else console.log('No valid event detected.')
+}
 
-cardEditButtonEl.addEventListener("click", handleEditButtonClick);
+cardListEl.addEventListener('click', handleCardListClick);
+
+exportButtonEl.addEventListener("click", downloadCanvas);
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
   updateCard(currentCardElement);
 });
 
-cardDeleteButtonEl.addEventListener("click", handleDeleteButtonClick);
 
 cardModalCloseButtonEl.addEventListener("click", () => {
   closeModal(modalCardEl);
@@ -265,7 +313,6 @@ cardAddButtonEl.addEventListener("click", () => {
   textColorInput.value = "#000000";
 });
 
-cardCaptureButtonEl.addEventListener("click", handleCaptureClick);
 
 modalCardEl.addEventListener('click', (event) => {
   if (event.currentTarget === event.target) closeModal(event.currentTarget)
@@ -282,5 +329,25 @@ document.addEventListener('keydown', (event) => {
   }
 })
 
+modalCardEl.addEventListener('transitionend', (event) => {
+  if (event.target.classList.contains('modal_active')) nameInput.focus();
+});
 
+function clearLocalStorage () {
+  localStorage.cardList = undefined;
+}
 
+function initiateCardList () {
+  if ((localStorage.cardList == 'undefined') || (localStorage.cardList == undefined)) {
+    generateFirstCard()
+  } else {
+    cards = (JSON.parse(localStorage.cardList))
+  }
+
+}
+
+initiateCardList()
+// cards = (JSON.parse(localStorage.cardList) || generateFirstCard());
+// generateFirstCard();
+// updateLocalStorage(cards);
+renderCardList();

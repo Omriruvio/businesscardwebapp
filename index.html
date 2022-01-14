@@ -56,30 +56,14 @@
             <button class="modal__close-button" title="Discard"></button>
             <h2 class="modal__title">Card export & preview</h2>
             <div class="capture-window"></div>
-            <img src="./images/export-button.svg" alt="export button" class="export-button" />
+            <button type="button" title="Export" class="button button_type_export">
+              <span class="button__description">Export</span>
+              <img src="./images/export-button.svg" alt="export button" class="export-button" id="export-button" />
+            </button>
           </div>
         </div>
       </div>
-      <ul class="card-list">
-        <li class="card card-id-0">
-          <h2 class="card__person-name">Omri Ruvio</h2>
-          <p class="card__person-profession">Co-Founder & CEO @ CyberGames</p>
-          <img src="./images/omri-avatar.svg" alt="" class="card__person-avatar" />
-          <p class="card__person-contact-info">+972.58.740.0020 | omri@cyber.games | cyber.games</p>
-          <button class="card-button card__edit-button" title="Edit"></button>
-          <button class="card-button card__delete-button" title="Delete"></button>
-          <button class="card-button card__capture-button" title="Download card as image"></button>
-          <div class="confirm-banner">
-            <div class="confirm-banner__wrapper">
-              <h3 class="confirm-banner__title">Delete this card?</h3>
-              <div class="confirm-banner__buttons">
-                <button type="button" class="button button_type_confirm">Delete</button>
-                <button type="button" class="button button_type_cancel">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <ul class="card-list"></ul>
       <div class="card card_template">
         <h2 class="card__person-name">Your Name</h2>
         <p class="card__person-profession">Your profession & education</p>
@@ -89,8 +73,27 @@
       </div>
     </main>
     <footer></footer>
+    <template id="card-template">
+      <li class="card card-id-0">
+        <h2 class="card__person-name"></h2>
+        <p class="card__person-profession"></p>
+        <img src="" alt="" class="card__person-avatar" />
+        <p class="card__person-contact-info"></p>
+        <button class="card-button card__edit-button" title="Edit"></button>
+        <button class="card-button card__delete-button" title="Delete"></button>
+        <button class="card-button card__capture-button" title="Download card as image"></button>
+        <div class="confirm-banner">
+          <div class="confirm-banner__wrapper">
+            <h3 class="confirm-banner__title">Delete this card?</h3>
+            <div class="confirm-banner__buttons">
+              <button type="button" class="button button_type_confirm">Delete</button>
+              <button type="button" class="button button_type_cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </template>
     <script src="./node_modules/dom-to-image/dist/dom-to-image.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/ally.js/1.4.1/ally.min.js"></script>
     <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
