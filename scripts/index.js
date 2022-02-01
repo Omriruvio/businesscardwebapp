@@ -1,3 +1,14 @@
+import Card from './Card.js';
+
+const config = {
+  cardTemplateSelector: '#card-template',
+  cardItemSelector: '.card',
+  titleSelector: '.card__person-name',
+  professionSelector: '.card__person-profession',
+  contactInfoSelector: '.card__person-contact-info',
+  imgSelector: '.card__person-avatar',
+}
+
 let cards = [];
 let isCardNew = false;
 let currentCardElement = document.querySelector(".card");
@@ -45,7 +56,7 @@ const confirmBannerWrapper = document.querySelector(".confirm-banner__wrapper");
 const confirmButtonDelete = document.querySelector(".button_type_confirm");
 const confirmButtonCancel = document.querySelector(".button_type_cancel");
 
-cardPrototypeEl.id = 0;
+// cardPrototypeEl.id = 0;
 
 function generateFirstCard() {
   // add initial card to cards array
@@ -351,3 +362,7 @@ initiateCardList()
 // generateFirstCard();
 // updateLocalStorage(cards);
 renderCardList();
+
+console.log('cards[0]: ', cards[0]);
+console.log(new Card(cards[0], config).getCardElement())
+cardListEl.appendChild(new Card(cards[0], config).getCardElement());
