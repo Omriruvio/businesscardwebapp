@@ -7,6 +7,11 @@ const config = {
   professionSelector: '.card__person-profession',
   contactInfoSelector: '.card__person-contact-info',
   imgSelector: '.card__person-avatar',
+  editButtonSelector: '.card__edit-button',
+  deleteButtonSelector: '.card__delete-button',
+  captureButtonSelector: '.card__capture-button',
+  editModalSelector: '.modal_type_card',
+  openModal,
 }
 
 let cards = [];
@@ -67,7 +72,7 @@ function generateFirstCard() {
     image: './images/omri-avatar.svg',
     color: "#FAEBD7",
     textcolor: "#000000",
-    serial: 0,
+    id: 0,
   };
 }
 
@@ -79,7 +84,7 @@ function renderCardList() {
     if (!card.deleted) {
       const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
       newCardElement.classList.remove("card-id-0");
-      newCardElement.classList.add("card" + "-id-" + card.serial);
+      newCardElement.classList.add("card" + "-id-" + card.id);
       newCardElement.querySelector(".card__person-name").textContent =
       card.name;
       newCardElement.querySelector(".card__person-profession").textContent =
@@ -89,7 +94,7 @@ function renderCardList() {
       card.contact;
       newCardElement.style.backgroundColor = card.color;
       newCardElement.style.color = card.textcolor;
-      newCardElement.id = card.serial;
+      newCardElement.id = card.id;
       cardListEl.appendChild(newCardElement);
     }
   })
@@ -101,27 +106,8 @@ function updateLocalStorage(cards) {
   localStorage.setItem('cardList', payload);
 }
 
-// function 
-
 function openModal(modal) {
   modal.classList.add('modal_active');
-  // focusInputAsync(nameInput, 100);
-}
-
-// function focusInputAsync(inputEl, interval) {
-//   let checkFocus = setInterval(()=> {
-//     if (!isInputFocused(inputEl)) {
-//       console.log('input was not focused');
-//       inputEl.focus();
-//     } else {
-//       console.log('input is focused');
-//       clearInterval(checkFocus);
-//     }
-//   }, interval)
-// }
-
-function isInputFocused (inputEl) {
-  return (document.activeElement == inputEl);
 }
 
 function closeModal(modal) {
@@ -140,7 +126,7 @@ function createNewCard() {
     profession: professionInput.value,
     contact: contactInput.value,
     image: avatarUrlInput.value,
-    serial: cards.length,
+    id: cards.length,
     color: colorInput.value,
     textcolor: textColorInput.value,
   };
@@ -181,7 +167,7 @@ function createNewCardFromInput() {
   updateLocalStorage(cards);
   const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
   newCardElement.classList.remove("card-id-0");
-  newCardElement.classList.add("card" + "-id-" + currentCard.serial);
+  newCardElement.classList.add("card" + "-id-" + currentCard.id);
   newCardElement.querySelector(".card__person-name").textContent =
     currentCard.name;
   newCardElement.querySelector(".card__person-profession").textContent =
@@ -191,7 +177,7 @@ function createNewCardFromInput() {
     currentCard.contact;
   newCardElement.style.backgroundColor = currentCard.color;
   newCardElement.style.color = currentCard.textcolor;
-  newCardElement.id = currentCard.serial;
+  newCardElement.id = currentCard.id;
   return newCardElement;
 }
 
@@ -234,7 +220,7 @@ function toggleConfirmBanner(card) {
     // remove card from cards list
     // debugger;
     // cards.splice(cards.find(card => card.serial == event.target.closest('.card').id).serial, 1)
-    cards.find(card => card.serial == event.target.closest('.card').id).deleted = true;
+    cards.find(card => card.id == event.target.closest('.card').id).deleted = true;
     // cards.splice(event.target.closest('.card').id, 1)
     currentCardElement.remove()
     updateLocalStorage(cards);
@@ -286,15 +272,15 @@ function downloadCanvas() {
   link.click();
 }
 
-function handleCardListClick (event) {
-  const classList = event.target.classList;
-  if (classList.contains('card__edit-button')) handleEditButtonClick(event)
-  else if (classList.contains('card__delete-button')) handleDeleteButtonClick(event);
-  else if (classList.contains('card__capture-button')) handleCaptureClick(event);
-  else console.log('No valid event detected.')
-}
+// function handleCardListClick (event) {
+//   const classList = event.target.classList;
+//   if (classList.contains('card__edit-button')) handleEditButtonClick(event)
+//   else if (classList.contains('card__delete-button')) handleDeleteButtonClick(event);
+//   else if (classList.contains('card__capture-button')) handleCaptureClick(event);
+//   else console.log('No valid event detected.')
+// }
 
-cardListEl.addEventListener('click', handleCardListClick);
+// cardListEl.addEventListener('click', handleCardListClick);
 
 exportButtonEl.addEventListener("click", downloadCanvas);
 
@@ -363,6 +349,6 @@ initiateCardList()
 // updateLocalStorage(cards);
 renderCardList();
 
-console.log('cards[0]: ', cards[0]);
-console.log(new Card(cards[0], config).getCardElement())
+// console.log('cards[0]: ', cards[0]);
+// console.log(new Card(cards[0], config).getCardElement())
 cardListEl.appendChild(new Card(cards[0], config).getCardElement());
