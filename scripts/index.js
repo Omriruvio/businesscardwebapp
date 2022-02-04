@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import * as utils from './utils.js'
 
 const config = {
   cardTemplateSelector: '#card-template',
@@ -17,16 +18,14 @@ const config = {
   contactInputSelector: '#contact-input',
   colorInputSelector: '.js-color-input',
   textColorInputSelector: '.js-text-color-input',
-  openModal, captureCard,
+  openModal: utils.openModal,
+  captureCard, deleteCard, setCurrentCard,
 }
 
 let cardsDB = [];
-let cards = [];
+let currentCardElement = {};
 let isCardNew = false;
-let currentCardElement = document.querySelector(".card");
-const randomAvatarLength = 12;
 
-const cardEditButtonEl = document.querySelector(".card__edit-button");
 const modalCardEl = document.querySelector(".modal_type_card");
 const modalPreviewEl = document.querySelector(".modal_type_preview");
 const cardModalCloseButtonEl = document.querySelector(
@@ -36,24 +35,8 @@ const previewModalCloseButtonEl = document.querySelector(
   ".modal_type_preview .modal__close-button"
 );
 const cardAddButtonEl = document.querySelector(".card__add-button");
-const cardDeleteButtonEl = document.querySelector(".card__delete-button");
 const exportButtonEl = document.querySelector(".export-button");
-
-// declare the element of the "Capture" icon: //
-const cardCaptureButtonEl = document.querySelector(".card__capture-button");
-
-// declare the element of the Capture-window : //
 const captureWindow = document.querySelector(".capture-window");
-
-const cardPersonNameEL = document.querySelector(".card__person-name");
-const cardPersonProfessionEL = document.querySelector(
-  ".card__person-profession"
-);
-const cardPersonAvatarEL = document.querySelector(".card__person-avatar");
-const cardPersonContactEL = document.querySelector(
-  ".card__person-contact-info"
-);
-const cardPrototypeEl = document.querySelector("#card-template");
 const cardListEl = document.querySelector(".card-list");
 const nameInput = document.querySelector(".js-name-input");
 const professionInput = document.querySelector(".js-profession-input");
@@ -62,18 +45,10 @@ const contactInput = document.querySelector(".js-contact-input");
 const colorInput = document.querySelector(".js-color-input");
 const textColorInput = document.querySelector(".js-text-color-input");
 const formEl = document.querySelector("#card-form");
-const pageElement = document.querySelector(".page");
-const confirmBannerEl = document.querySelector(".confirm-banner");
-const confirmBannerWrapper = document.querySelector(".confirm-banner__wrapper");
-const confirmButtonDelete = document.querySelector(".button_type_confirm");
-const confirmButtonCancel = document.querySelector(".button_type_cancel");
-
-// cardPrototypeEl.id = 0;
 
 function generateFirstCard() {
   // add initial card to cards array
-
-  cardsDB[0] = new Card({
+  cardsDB[0] = {
     name: 'Omri Ruvio',
     profession: 'Co-Founder & CEO @ CyberGames',
     contact: '+972.58.740.0020 | omri@cyber.games | cyber.games',
@@ -81,47 +56,28 @@ function generateFirstCard() {
     color: "#FAEBD7",
     textColor: "#000000",
     id: 0,
-  }, config).getCardElement().innerHTML;
-  debugger;
-  // cardListEl.appendChild(cardsDB[0].getCardElement());
+  }
 }
-
-// clearLocalStorage();
 
 function renderCardList() {
   // if local storage does not exist, add cards array to localstorage
-  if (localStorage.cardList == undefined) {
+  if ((localStorage.cardList == undefined) || (localStorage.cardList == 'undefined'))  {
     updateLocalStorage(cardsDB);
   } 
-  // pase storage card list, for each card:
+  // parse storage card list, for each card:
   // if the card is not marked as deleted => generate a card and append it.
   JSON.parse(localStorage.cardList).forEach(card => {
     if (!card.deleted) {
-      // const newCardElement = new Card(card, config).getCardElement();
-      console.log(card);
-      cardListEl.appendChild(card._cardElement);
+
+      const newCardElement = new Card(card, config).getCardElement();
+      cardListEl.appendChild(newCardElement);
     }
-  })
-  
+  }) 
 }
 
 function updateLocalStorage(cardsDB) {
   const payload = JSON.stringify(cardsDB);
   localStorage.setItem('cardList', payload);
-}
-
-function openModal(modal) {
-  modal.classList.add('modal_active');
-}
-
-function closeModal(modal) {
-  modal.classList.remove('modal_active');
-}
-
-function getRandomAvatarUrl() {
-  let randomIndex = Math.floor(Math.random() * randomAvatarLength) + 1;
-  let randomAvatarUrl = "./images/random-avatar-" + randomIndex + ".svg";
-  return randomAvatarUrl;
 }
 
 function createNewCard() {
@@ -137,56 +93,14 @@ function createNewCard() {
   return card;
 }
 
-function getCurrentCardElement(event) {
-  const cardId = event.target.closest('.card').id;
-  currentCardElement = document.querySelector(".card-id-" + cardId);
-}
-
-function getRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-// function handleEditButtonClick(event) {
-//   openModal(modalCardEl);
-//   getCurrentCardElement(event);
-//   const currentCardID = event.target.closest(".card").id;
-//   nameInput.value = cards[currentCardID].name;
-//   professionInput.value = cards[currentCardID].profession;
-//   contactInput.value = cards[currentCardID].contact;
-//   avatarUrlInput.value = cards[currentCardID].image;
-//   colorInput.value = cards[currentCardID].color;
-//   textColorInput.value = cards[currentCardID].textcolor;
-// }
-
 function createNewCardFromInput() {
   // calls a function that pulls the data from the user input and saves card obj in currentCard
   const currentCard = createNewCard();
   // saves card info in cards array
-  // cards.push(currentCard);
+  cardsDB.push(currentCard);
   updateLocalStorage(cardsDB);
 
-
-  // const newCardElement = cardPrototypeEl.content.querySelector('.card').cloneNode(true);
-  // newCardElement.classList.remove("card-id-0");
-  // newCardElement.classList.add("card" + "-id-" + currentCard.id);
-  // newCardElement.querySelector(".card__person-name").textContent =
-  //   currentCard.name;
-  // newCardElement.querySelector(".card__person-profession").textContent =
-  //   currentCard.profession;
-  // newCardElement.querySelector(".card__person-avatar").src = currentCard.image;
-  // newCardElement.querySelector(".card__person-contact-info").textContent =
-  //   currentCard.contact;
-  // newCardElement.style.backgroundColor = currentCard.color;
-  // newCardElement.style.color = currentCard.textcolor;
-  // newCardElement.id = currentCard.id;
-  // return newCardElement;
   const cardObj = new Card(currentCard, config);
-  cardsDB.push(cardObj);
   return cardObj.getCardElement();
 }
 
@@ -197,62 +111,29 @@ function updateCard(card) {
     isCardNew = false;
   } else {
     // if card is not new (edit current card)
+
+    // update html elements
     card.querySelector(".card__person-name").textContent = nameInput.value;
     card.querySelector(".card__person-profession").textContent = professionInput.value;
     card.querySelector(".card__person-avatar").src = avatarUrlInput.value;
     card.querySelector(".card__person-contact-info").textContent = contactInput.value;
     card.style.backgroundColor = colorInput.value;
     card.style.color = textColorInput.value;
-    cards[card.id].name = nameInput.value;
-    cards[card.id].profession = professionInput.value;
-    cards[card.id].contact = contactInput.value;
-    cards[card.id].image = avatarUrlInput.value;
-    cards[card.id].color = colorInput.value;
-    cards[card.id].textColor = textColorInput.value;
-    updateLocalStorage(cards);
+
+    // update cardsDB information
+    cardsDB[card.id].name = nameInput.value;
+    cardsDB[card.id].profession = professionInput.value;
+    cardsDB[card.id].contact = contactInput.value;
+    cardsDB[card.id].image = avatarUrlInput.value;
+    cardsDB[card.id].color = colorInput.value;
+    cardsDB[card.id].textColor = textColorInput.value;
+    updateLocalStorage(cardsDB);
   }
-  closeModal(modalCardEl);
+  utils.closeModal(modalCardEl);
 }
 
-
-// function toggleConfirmBanner(card) {
-//   const confirmBanner = card.querySelector('.confirm-banner');
-//   const confirmWrapper = card.querySelector('.confirm-banner__wrapper');
-//   confirmBanner.classList.toggle('confirm-banner_active');
-//   confirmWrapper.classList.toggle('confirm-banner__wrapper_active');
-//   const confirmDeleteButton = card.querySelector('.button_type_confirm');
-//   const cancelDeleteButton = card.querySelector('.button_type_cancel');
-
-//   function handleConfirmClick (event) {
-//     getCurrentCardElement(event); 
-//     confirmBanner.classList.remove('confirm-banner_active');
-//     confirmWrapper.classList.remove('confirm-banner__wrapper_active');
-//     // remove card from cards list
-//     // cards.splice(cards.find(card => card.serial == event.target.closest('.card').id).serial, 1)
-//     cards.find(card => card.id == event.target.closest('.card').id).deleted = true;
-//     // cards.splice(event.target.closest('.card').id, 1)
-//     currentCardElement.remove()
-//     updateLocalStorage(cards);
-//   }
-
-//   function handleCancelClick (event) {
-//     confirmBanner.classList.remove('confirm-banner_active');
-//     confirmWrapper.classList.remove('confirm-banner__wrapper_active');
-//     confirmDeleteButton.removeEventListener('click', handleConfirmClick);
-//     cancelDeleteButton.removeEventListener('click', handleCancelClick);
-//   }
-//   confirmDeleteButton.addEventListener('click', handleConfirmClick);
-//   cancelDeleteButton.addEventListener('click', handleCancelClick);
-
-// }
-
-// function handleDeleteButtonClick(event) {
-//   getCurrentCardElement(event);
-//   toggleConfirmBanner(currentCardElement);
-// }
-
 function captureCard (event) {
-  openModal(modalPreviewEl);
+  utils.openModal(modalPreviewEl);
   domtoimage.toSvg(this._cardElement, {filter: filterCardOverlays, style: {borderRadius: 'unset'}}).then(function (dataUrl) {
     const img = new Image();
     img.src = dataUrl;
@@ -272,6 +153,12 @@ function captureCard (event) {
   }
 }
 
+function deleteCard () {
+  cardsDB[this.id].deleted = true;
+  this._cardElement.remove();
+  updateLocalStorage(cardsDB);
+}
+
 function downloadCanvas() {
   const img = captureWindow.firstElementChild;
   const link = document.createElement('a');
@@ -280,15 +167,6 @@ function downloadCanvas() {
   link.click();
 }
 
-// function handleCardListClick (event) {
-//   const classList = event.target.classList;
-//   if (classList.contains('card__edit-button')) handleEditButtonClick(event)
-//   else if (classList.contains('card__delete-button')) handleDeleteButtonClick(event);
-//   else if (classList.contains('card__capture-button')) handleCaptureClick(event);
-// }
-
-// cardListEl.addEventListener('click', handleCardListClick);
-
 exportButtonEl.addEventListener("click", downloadCanvas);
 
 formEl.addEventListener("submit", (event) => {
@@ -296,40 +174,44 @@ formEl.addEventListener("submit", (event) => {
   updateCard(currentCardElement);
 });
 
+function setCurrentCard () {
+  currentCardElement = this._cardElement;
+}
+
 
 cardModalCloseButtonEl.addEventListener("click", () => {
-  closeModal(modalCardEl);
+  utils.closeModal(modalCardEl);
   isCardNew = false;
 });
 
 previewModalCloseButtonEl.addEventListener("click", () => {
-  closeModal(modalPreviewEl);
+  utils.closeModal(modalPreviewEl);
 });
 
 cardAddButtonEl.addEventListener("click", () => {
-  openModal(modalCardEl);
+  utils.openModal(modalCardEl);
   isCardNew = true;
   nameInput.value = "Your name";
   professionInput.value = "Your profession / education";
   contactInput.value = "Your contact information";
-  avatarUrlInput.value = getRandomAvatarUrl();
-  colorInput.value = getRandomColor();
+  avatarUrlInput.value = utils.getRandomAvatarUrl();
+  colorInput.value = utils.getRandomColor();
   textColorInput.value = "#000000";
 });
 
 
 modalCardEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) closeModal(event.currentTarget)
+  if (event.currentTarget === event.target) utils.closeModal(event.currentTarget)
 });
 
 modalPreviewEl.addEventListener('click', (event) => {
-  if (event.currentTarget === event.target) closeModal(event.currentTarget)
+  if (event.currentTarget === event.target) utils.closeModal(event.currentTarget)
 });
 
 document.addEventListener('keydown', (event) => {
   const currentModal = document.querySelector('.modal_active');
   if ((event.key == "Escape") && (currentModal)) {
-    closeModal(currentModal);
+    utils.closeModal(currentModal);
   }
 })
 
@@ -341,31 +223,21 @@ function clearLocalStorage () {
   localStorage.cardList = undefined;
 }
 
+function initiateCardList () {
+  if ((localStorage.cardList == 'undefined') || (localStorage.cardList == undefined)) {
+    generateFirstCard()
+  } else {
+    cardsDB = (JSON.parse(localStorage.cardList))
+  }
 
-// function initiateCardList () {
-//   if ((localStorage.cardList == 'undefined') || (localStorage.cardList == undefined)) {
-//     generateFirstCard()
-//   } else {
-//     cardsDB = (JSON.parse(localStorage.cardList))
-//   }
+}
 
-// }
-
-// initiateCardList();
-
-
-
-// cards = (JSON.parse(localStorage.cardList) || generateFirstCard());
-// generateFirstCard();
-// updateLocalStorage(cards);
-// renderCardList();
-
-// cardListEl.appendChild(new Card(cards[0], config).getCardElement());
-
-
-
-generateFirstCard();
+initiateCardList();
 
 renderCardList();
 
-console.log(cardsDB);
+// TODO:
+// change listeners - remove global keyboard event listeners etc.
+// reset form field errors after closing, set button to disabled when invalid
+// split new card and edit card forms & split updateCard function logic accordingly
+// remove global variable currentCardElement

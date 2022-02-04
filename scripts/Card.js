@@ -28,6 +28,9 @@ export default class Card {
     // functions
     this._openModal = config.openModal;
     this._captureCard = config.captureCard;
+    this._deleteCard = config.deleteCard;
+    this.setCurrentCard = config.setCurrentCard;
+
   }
 
 
@@ -60,6 +63,8 @@ export default class Card {
     this._contactInput.value = this._contact;
     this._colorInput.value = this._color;
     this._textColorInput = this._textColor;
+
+    this.setCurrentCard();
   }
 
   _handleDeleteClick = () => {
@@ -86,15 +91,7 @@ export default class Card {
   _handleConfirmClick = () => {
     this._confirmBanner.classList.remove('confirm-banner_active');
     this._confirmWrapper.classList.remove('confirm-banner__wrapper_active');
-    
-    // TODO: handle card database - remove card from cards list
-    this.deleted = true;
-
-    // cards.splice(cards.find(card => card.serial == event.target.closest('.card').id).serial, 1)
-    // cards.find(card => this._cardElementid == event.target.closest('.card').id).deleted = true;
-    // cards.splice(event.target.closest('.card').id, 1)
-    this._cardElement.remove()
-    // updateLocalStorage(cards);
+    this._deleteCard();
   }
 
   _handleCaptureClick = () => {
@@ -141,6 +138,7 @@ export default class Card {
     this._cardElement = this._getCardFromTemplate();
     this._populateCardInfo();
     this._setEventListners();
+    this._cardElement.id = this.id;
     return this._cardElement;
   }
 
